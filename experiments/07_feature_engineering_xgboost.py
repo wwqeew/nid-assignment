@@ -90,9 +90,9 @@ def encode_labels(y_train, y_test):
 
 
 def make_sampling_strategy(label_encoder):
-    # same SMOTE targets as the current best tuned XGBoost.
+    # tried new smote
     return {
-        int(label_encoder.transform(["R2L"])[0]): 12000,
+        int(label_encoder.transform(["R2L"])[0]): 16000,
         int(label_encoder.transform(["U2R"])[0]): 3000
     }
 
