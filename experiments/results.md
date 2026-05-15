@@ -9,4 +9,4 @@
 | 03 | SMOTE + XGBoost | 0.9437 ± 0.0262 | 0.6073 | SMOTE improved minority class detection, especially U2R |
 | 04 | Tuned SMOTE + XGBoost | 0.9412 ± 0.0297 | 0.6086 | Best result so far; small improvement over previous SMOTE + XGBoost, especially on R2L/U2R |
 
-04_tuned_xgboost.py took around 15 minutes on collab
+04_tuned_xgboost.py took around 15 minutes on colab
