@@ -11,6 +11,10 @@
 | 05 | LightGBM | Not measured | 0.5444 | Faster but weaker than XGBoost |
 | 05 | SMOTE + LightGBM | 0.9296 ± 0.0283 | 0.5922 | Improved minority class detection, especially U2R, but did not beat tuned SMOTE + XGBoost |
 | 06 | Threshold tuning + SMOTE + XGBoost | 0.9408 ± 0.0217 | 0.6086 | Threshold tuning did not improve the model; best multipliers were all 1.0 |
+| 07 | XGBoost + Feature Engineering | Not measured | 0.5730 | Feature engineering improved plain XGBoost compared to earlier baseline, did not beat SMOTE-based models |
+| 07 | SMOTE + XGBoost + Feature Engineering | 0.9480 ± 0.0269 | 0.6051 | Very close to the best result; U2R improved to 0.40 |
+
 
 * 04_tuned_xgboost.py took around 15 minutes on colab
 * 06_threshold_tuning_xgboost.pybest: validation configuration kept all multipliers at 1.0
+* SMOTE + XGBoost + Feature Engineering was tested with more "agressive" XGBClassifier parameters and SMOTE R2l = 16000 (requires check with old parameters) 
