@@ -10,5 +10,7 @@
 | 04 | Tuned SMOTE + XGBoost | 0.9412 ± 0.0297 | 0.6086 | Best result so far; small improvement over previous SMOTE + XGBoost, especially on R2L/U2R |
 | 05 | LightGBM | Not measured | 0.5444 | Faster but weaker than XGBoost |
 | 05 | SMOTE + LightGBM | 0.9296 ± 0.0283 | 0.5922 | Improved minority class detection, especially U2R, but did not beat tuned SMOTE + XGBoost |
+| 06 | Threshold tuning + SMOTE + XGBoost | 0.9408 ± 0.0217 | 0.6086 | Threshold tuning did not improve the model; best multipliers were all 1.0 |
 
-04_tuned_xgboost.py took around 15 minutes on colab
+* 04_tuned_xgboost.py took around 15 minutes on colab
+* 06_threshold_tuning_xgboost.pybest: validation configuration kept all multipliers at 1.0
