@@ -69,7 +69,7 @@ def main():
 
     print("\n===== Experiment Summary =====")
     print("Experiment: 01_random_forest")
-    print("Best model: Random Forest Balanced")
+    print("Best model in this experiment: Random Forest Default")
     print(f"CV macro F1: {cv_mean:.4f} ± {cv_std:.4f}")
     print(f"Test macro F1: {test_macro_f1:.4f}")
 
