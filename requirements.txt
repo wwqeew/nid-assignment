@@ -1,5 +1,3 @@
-i guess...
-
 pandas
 numpy
 scikit-learn
