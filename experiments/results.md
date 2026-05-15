@@ -8,5 +8,7 @@
 | 03 | XGBoost | Not measured | 0.5562 | Better than Random Forest; improved R2L and U2R compared to baseline |
 | 03 | SMOTE + XGBoost | 0.9437 ± 0.0262 | 0.6073 | SMOTE improved minority class detection, especially U2R |
 | 04 | Tuned SMOTE + XGBoost | 0.9412 ± 0.0297 | 0.6086 | Best result so far; small improvement over previous SMOTE + XGBoost, especially on R2L/U2R |
+| 05 | LightGBM | Not measured | 0.5444 | Faster but weaker than XGBoost |
+| 05 | SMOTE + LightGBM | 0.9296 ± 0.0283 | 0.5922 | Improved minority class detection, especially U2R, but did not beat tuned SMOTE + XGBoost |
 
 04_tuned_xgboost.py took around 15 minutes on colab
