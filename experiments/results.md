@@ -20,6 +20,7 @@
 | 12 | MLP Neural Network | Not measured | 0.5996 | Best neural network result; performed surprisingly well without SMOTE, especially on U2R precision |
 | 12 | SMOTE + MLP Neural Network | 0.8481 ± 0.0151 | 0.5636 | SMOTE reduced performance; U2R precision dropped significantly, causing lower macro F1 |
 | 14 | Feature Selection + Tuned SMOTE XGBoost | 0.9415 ± 0.0291 | 0.6166 | New best result; median feature selection reduced encoded features from 121 to 61 and improved generalization |
+| 15 | Linear SVM | 0.8248 ± 0.0338 | 0.5555 | Plain Linear SVM performed best among SVM variants; class weights and SMOTE did not help, and R2L detection remained very weak |
 
 ## Planned experiments
 
