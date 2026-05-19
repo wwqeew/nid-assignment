@@ -16,6 +16,26 @@
 | 08 | Tuned SMOTE + XGBoost + Feature Engineering | 0.9454 ± 0.0234 | 0.6078 | Very close to the best result; U2R improved to 0.44, but Probe performance decreased, overall macro F1 did not improve |
 
 
+## Planned experiments
+
+| No. | File | Model / Approach | Purpose |
+| --- | --- | --- | --- | --- |
+| 09 | `09_smoteenn_xgboost.py` | SMOTEENN + Tuned XGBoost | Try combined oversampling and cleaning to improve R2L vs Normal separation |
+| 10 | `10_weighted_xgboost.py` | Cost-sensitive XGBoost with `sample_weight` | Penalize mistakes on R2L and U2R more strongly without relying only on SMOTE |
+| 11 | `11_threshold_tuning_lightgbm.py` | Threshold / probability tuning for LightGBM | Check whether LightGBM improves after R2L/U2R probability adjustment |
+| 12 | `12_mlp_neural_network.py` | SMOTE + MLP neural network | Test an actual neural network model for comparison |
+| 13 | `13_voting_ensemble.py` | Voting ensemble of XGBoost, LightGBM, Random Forest | Combine strongest models and test whether ensemble improves macro F1 |
+| 14 | `14_feature_selection_xgboost.py` | Feature selection + Tuned SMOTE XGBoost | Remove noisy/redundant features and test whether generalization improves |
+| 15 | `15_svm.py` | Linear SVM with scaling and class weights | Test SVM as an alternative classifier for minority classes |
+| 16 | `16_knn.py` | k-NN with scaling and SMOTE | Test distance-based classification as an additional comparison |
+
+## Current best model
+
+| Model | CV Macro F1 | Test Macro F1 | Notes |
+| --- | ---: | ---: | --- |
+| Tuned SMOTE + XGBoost | 0.9412 ± 0.0297 | 0.6086 | Best result so far |
+
+
 * 04_tuned_xgboost.py took around 15 minutes on colab
 * 06_threshold_tuning_xgboost.pybest: validation configuration kept all multipliers at 1.0
 * SMOTE + XGBoost + Feature Engineering was tested with more "agressive" XGBClassifier parameters and SMOTE R2l = 16000 (requires check with old parameters) 
