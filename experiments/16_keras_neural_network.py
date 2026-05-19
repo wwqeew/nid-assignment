@@ -390,13 +390,13 @@ def main():
     save_confusion_matrix(
         y_test,
         best_result["y_test_pred"],
-        "outputs/confusion_matrices/13_keras_neural_network.png"
+        "outputs/confusion_matrices/16_keras_neural_network.png"
     )
 
     total_elapsed_time = time.perf_counter() - total_start_time
 
     print("\n===== Experiment Summary =====")
-    print("Experiment: 13_keras_neural_network")
+    print("Experiment: 16_keras_neural_network")
     print(f"Best configuration: {best_result['name']}")
     print(f"Best 3-fold CV macro F1: {cv_mean:.4f} ± {cv_std:.4f}")
     print(f"Test macro F1: {best_result['test_macro_f1']:.4f}")
