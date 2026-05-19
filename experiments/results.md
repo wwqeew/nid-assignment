@@ -16,7 +16,8 @@
 | 08 | Tuned SMOTE + XGBoost + Feature Engineering | 0.9454 ± 0.0234 | 0.6078 | Very close to the best result; U2R improved to 0.44, but Probe performance decreased, overall macro F1 did not improve |
 | 10 | Weighted XGBoost | 0.9506 ± 0.0204 | 0.5968 | Strong result without SMOTE; reducing Normal weight and increasing R2L/U2R weights improved minority detection, but did not beat tuned SMOTE + XGBoost |
 | 11 | Threshold tuning + SMOTE + LightGBM | 0.9295 ± 0.0283 | 0.6021 | Threshold tuning improved LightGBM by boosting U2R probability; U2R F1 increased to 0.45, but R2L remained weak |
-
+| 12 | MLP Neural Network | Not measured | 0.5996 | Best neural network result; performed surprisingly well without SMOTE, especially on U2R precision |
+| 12 | SMOTE + MLP Neural Network | 0.8481 ± 0.0151 | 0.5636 | SMOTE reduced performance; U2R precision dropped significantly, causing lower macro F1 |
 
 ## Planned experiments
 
