@@ -24,6 +24,7 @@
 | 15 | Linear SVM | 0.8248 ± 0.0338 | 0.5555 | Plain Linear SVM performed best among SVM variants; class weights and SMOTE did not help, and R2L detection remained very weak |
 | 16 | Keras Neural Network custom weights | 0.8675 ± 0.0381 | 0.6399 | New best result; custom class weights strongly improved U2R detection while keeping good DoS/Normal/Probe performance, but R2L recall remained low |
 | 17 | Threshold tuning + Keras custom weights | 0.8433 ± 0.0381 | 0.5625 | did not improve Keras; best tuned version scored 0.5606, raw Keras scored 0.5625. showed high instability compared to experiment 16 |
+| 18 | Keras multi-seed ensemble | 0.8495 ± 0.0295 | 0.6147 | Averaged predictions from three Keras models with seeds [42, 7, 21]. Individual seed scores were 0.6182, 0.5899, and 0.6350. The ensemble did not improve over the best single Keras model because weaker seeds reduced averaged probability quality. |
 
 ## Planned experiments
 
