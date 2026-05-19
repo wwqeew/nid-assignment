@@ -19,7 +19,7 @@
 ## Planned experiments
 
 | No. | File | Model / Approach | Purpose |
-| --- | --- | --- | --- | --- |
+| --- | --- | --- | --- |
 | 09 | `09_smoteenn_xgboost.py` | SMOTEENN + Tuned XGBoost | Try combined oversampling and cleaning to improve R2L vs Normal separation |
 | 10 | `10_weighted_xgboost.py` | Cost-sensitive XGBoost with `sample_weight` | Penalize mistakes on R2L and U2R more strongly without relying only on SMOTE |
 | 11 | `11_threshold_tuning_lightgbm.py` | Threshold / probability tuning for LightGBM | Check whether LightGBM improves after R2L/U2R probability adjustment |
