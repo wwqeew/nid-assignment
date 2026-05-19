@@ -14,6 +14,7 @@
 | 07 | XGBoost + Feature Engineering | Not measured | 0.5730 | Feature engineering improved plain XGBoost compared to earlier baseline, did not beat SMOTE-based models |
 | 07 | SMOTE + XGBoost + Feature Engineering | 0.9480 ± 0.0269 | 0.6051 | Very close to the best result; U2R improved to 0.40 |
 | 08 | Tuned SMOTE + XGBoost + Feature Engineering | 0.9454 ± 0.0234 | 0.6078 | Very close to the best result; U2R improved to 0.44, but Probe performance decreased, overall macro F1 did not improve |
+| 09 | SMOTEENN + Tuned XGBoost | 0.9542 ± 0.0291 | 0.6097 | Best result so far; aggressive ENN cleaning slightly improved macro F1, but training time was much higher |
 | 10 | Weighted XGBoost | 0.9506 ± 0.0204 | 0.5968 | Strong result without SMOTE; reducing Normal weight and increasing R2L/U2R weights improved minority detection, but did not beat tuned SMOTE + XGBoost |
 | 11 | Threshold tuning + SMOTE + LightGBM | 0.9295 ± 0.0283 | 0.6021 | Threshold tuning improved LightGBM by boosting U2R probability; U2R F1 increased to 0.45, but R2L remained weak |
 | 12 | MLP Neural Network | Not measured | 0.5996 | Best neural network result; performed surprisingly well without SMOTE, especially on U2R precision |
@@ -44,3 +45,4 @@
 * SMOTE + XGBoost + Feature Engineering was tested with more "agressive" XGBClassifier parameters and SMOTE R2l = 16000 (requires check with old parameters) 
 * Feature engineering improved U2R detection but did not improve overall macro F1.
 * Weighted XGBoost CV score was even higher, than best model result, however, CV score alone is not enough for NSL-KDD, test result was worse.
+* SMOTEENN + Tuned XGBoost total experiment time: 3312.34 seconds ≈ 55 minutes, final train + prediction time: 421.36 seconds ≈ 7 minutes
