@@ -28,6 +28,7 @@
 | 19 | Keras class weight + seed tuning | 0.8525 ± 0.0197 | 0.6646 | New best result. Tuning class weights and seed selection improved R2L detection significantly. Best setup used seed 100 and class weights {0: 1.0, 1: 0.7, 2: 2.0, 3: 20.0, 4: 60.0}. R2L F1 improved to 0.42, although U2R F1 decreased to 0.43. |
 | 20 | Keras fine-tuning around best weights | 0.8240 ± 0.0189 | 0.6006 | Follow-up to experiment 19. Fine-tuned class weights around the best Keras setup and selected `cw_3_r2l22_u2r60` with seed 100. Although validation tuning reached 0.9376 macro F1, the fixed 99-epoch final model overfit and dropped to 0.6006 test macro F1. R2L recall fell back to 0.09, so this model was not used as the final solution. |
 | 21 | Keras CV-selected training | 0.8690 ± 0.0263 | 0.6010 | Tested safer training strategies after experiment 20 by selecting the best class-weight setup through 3-fold CV and comparing early stopping with fixed median epoch training. CV selected the experiment 19 weights {0: 1.0, 1: 0.7, 2: 2.0, 3: 20.0, 4: 60.0}, but final test performance remained weak |
+| 22 | Keras categorical embeddings MLP | 0.8321 ± 0.0506 | 0.6578 | Tested a neural network with learned embeddings for categorical features instead of one-hot encoding. The best setup used embedding dimensions protocol=3, service=16, flag=4 and class weights {0: 1.0, 1: 0.7, 2: 2.0, 3: 20.0, 4: 60.0}. Achieved strong R2L detection with R2L F1 = 0.45, but did not beat experiment 19. |
 
 ## Planned experiments
 
