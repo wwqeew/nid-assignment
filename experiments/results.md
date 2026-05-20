@@ -42,9 +42,11 @@
 
 ## Current best model
 
+
 | Model | CV Macro F1 | Test Macro F1 | Notes |
 | --- | ---: | ---: | --- |
-| Tuned SMOTE + XGBoost | 0.9412 ± 0.0297 | 0.6086 | Best result so far |
+| Keras class weight + seed tuning | 0.8525 ± 0.0197 | 0.6646 | Best result so far; strongest overall macro F1 due to much better R2L detection |
+
 
 
 * 04_tuned_xgboost.py took around 15 minutes on colab
