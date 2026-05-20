@@ -25,6 +25,7 @@
 | 16 | Keras Neural Network custom weights | 0.8675 ± 0.0381 | 0.6399 | New best result; custom class weights strongly improved U2R detection while keeping good DoS/Normal/Probe performance, but R2L recall remained low |
 | 17 | Threshold tuning + Keras custom weights | 0.8433 ± 0.0381 | 0.5625 | did not improve Keras; best tuned version scored 0.5606, raw Keras scored 0.5625. showed high instability compared to experiment 16 |
 | 18 | Keras multi-seed ensemble | 0.8495 ± 0.0295 | 0.6147 | Averaged predictions from three Keras models with seeds [42, 7, 21]. Individual seed scores were 0.6182, 0.5899, and 0.6350. The ensemble did not improve over the best single Keras model because weaker seeds reduced averaged probability quality. |
+| 19 | Keras class weight + seed tuning | 0.8525 ± 0.0197 | 0.6646 | New best result. Tuning class weights and seed selection improved R2L detection significantly. Best setup used seed 100 and class weights {0: 1.0, 1: 0.7, 2: 2.0, 3: 20.0, 4: 60.0}. R2L F1 improved to 0.42, although U2R F1 decreased to 0.43. |
 
 ## Planned experiments
 
