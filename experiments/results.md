@@ -32,7 +32,10 @@
 | 23 | Stacking: Keras + SMOTE XGBoost + Feature Selection XGBoost | 0.9259 ± 0.0317 | 0.5491 | Stacked exp19 Keras, exp04 SMOTE XGBoost, and exp14 Feature Selection XGBoost using out-of-fold predicted probabilities and logistic regression as the meta-model. Although meta-model CV on OOF features was high, the final KDDTest+ result collapsed to 0.5491 macro F1 because the meta-model did not generalize to unseen attack types and strongly underpredicted R2L/U2R. |
 | 24 | Voting: Keras + SMOTE XGBoost + Feature Selection XGBoost | 0.9430 ± 0.0320 | 0.5976 | Tested soft voting over exp19 Keras, exp04 SMOTE XGBoost, and exp14 Feature Selection XGBoost. Although CV and validation scores were high, the final KDDTest+ result dropped to 0.5976. The ensemble underpredicted R2L and U2R, with R2L F1 = 0.16 and U2R F1 = 0.36. |
 | 25 | SMOTEENN + Tuned XGBoost | 0.9412 ± 0.0295 | 0.6058 | combined oversampling and cleaning to improve R2L vs Normal separation |
-| 26 | Cost-sensitive XGBoost with `sample_weight` |
+| 26 | Cost-sensitive XGBoost with `sample_weight` | 0.9506 ± 0.0204 | 0.5968 | Penalize mistakes on R2L and U2R more strongly without relying only on SMOTE |
+| 27 | Threshold / probability tuning for LightGBM | 0.9329 ± 0.0252 | 0.6080 | 0.48 score for U2R with multiplier 4.0 |
+
+| 29 | Feature selection + Tuned SMOTE XGBoost | 0.9412 ± 0.0295 | 0.6058 | Remove noisy/redundant features and test whether generalization improves |
 | 31 | k-NN with scaling and SMOTE | 0.7641 ± 0.0076 | 0.6358 | Test distance-based classification as an additional comparison |
 
 ## Planned experiments
@@ -40,7 +43,6 @@
 | No. | File | Model / Approach | Purpose |
 | --- | --- | --- | --- |
 
-| 10 | `10_weighted_xgboost.py` | Cost-sensitive XGBoost with `sample_weight` | Penalize mistakes on R2L and U2R more strongly without relying only on SMOTE |
 | 11 | `11_threshold_tuning_lightgbm.py` | Threshold / probability tuning for LightGBM | Check whether LightGBM improves after R2L/U2R probability adjustment |
 | 12 | `12_mlp_neural_network.py` | SMOTE + MLP neural network | Test an actual neural network model for comparison |
 | 13 | `13_voting_ensemble.py` | Voting ensemble of XGBoost, LightGBM, Random Forest | Combine strongest models and test whether ensemble improves macro F1 |
