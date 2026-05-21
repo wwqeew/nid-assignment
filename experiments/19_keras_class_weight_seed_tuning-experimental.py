@@ -87,14 +87,14 @@ def make_candidate_configs():
             "hidden_2": 128,
             "hidden_3": 64,
             "dropout": 0.30,
-            "learning_rate": 0.0005,
+            "learning_rate": 0.00005,
             "batch_size": 512,
-            "epochs": 120,
-            "patience": 10,
+            "epochs": 140,
+            "patience": 12,
             "class_weights": {
                 0: 1.0,    # DoS
                 1: 0.7,    # Normal
-                2: 2.0,    # Probe
+                2: 2.2,    # Probe
                 3: 20.0,   # R2L
                 4: 70.0    # U2R
             }
@@ -104,73 +104,73 @@ def make_candidate_configs():
             "hidden_1": 256,
             "hidden_2": 128,
             "hidden_3": 64,
-            "dropout": 0.30,
-            "learning_rate": 0.0005,
+            "dropout": 0.40,
+            "learning_rate": 0.00005,
             "batch_size": 512,
             "epochs": 140,
             "patience": 12,
             "class_weights": {
                 0: 1.0,
                 1: 0.7,
-                2: 2.0,
-                3: 19.5,
-                4: 60.0
-            }
-        },
-        {
-            "name": "cw_3_even_more_r2l",
-            "hidden_1": 256,
-            "hidden_2": 128,
-            "hidden_3": 64,
-            "dropout": 0.30,
-            "learning_rate": 0.0005,
-            "batch_size": 512,
-            "epochs": 140,
-            "patience": 12,
-            "class_weights": {
-                0: 1.0,
-                1: 0.7,
-                2: 2.0,
-                3: 20.5,
-                4: 60.5
-            }
-        },
-        {
-            "name": "cw_4_less_u2r_more_r2l",
-            "hidden_1": 256,
-            "hidden_2": 128,
-            "hidden_3": 64,
-            "dropout": 0.30,
-            "learning_rate": 0.0005,
-            "batch_size": 512,
-            "epochs": 140,
-            "patience": 12,
-            "class_weights": {
-                0: 1.0,
-                1: 0.7,
-                2: 2.0,
+                2: 2.2,
                 3: 20.0,
                 4: 60.0
             }
         },
-        {
-            "name": "cw_5_probe_r2l_boost",
-            "hidden_1": 256,
-            "hidden_2": 128,
-            "hidden_3": 64,
-            "dropout": 0.30,
-            "learning_rate": 0.0005,
-            "batch_size": 512,
-            "epochs": 140,
-            "patience": 12,
-            "class_weights": {
-                0: 1.0,
-                1: 0.7,
-                2: 2.0,
-                3: 21.0,
-                4: 61.0
-            }
-        }
+        # {
+        #     "name": "cw_3_even_more_r2l",
+        #     "hidden_1": 256,
+        #     "hidden_2": 128,
+        #     "hidden_3": 64,
+        #     "dropout": 0.30,
+        #     "learning_rate": 0.0005,
+        #     "batch_size": 512,
+        #     "epochs": 140,
+        #     "patience": 12,
+        #     "class_weights": {
+        #         0: 1.0,
+        #         1: 0.7,
+        #         2: 2.0,
+        #         3: 20.5,
+        #         4: 60.5
+        #     }
+        # },
+        # {
+        #     "name": "cw_4_less_u2r_more_r2l",
+        #     "hidden_1": 256,
+        #     "hidden_2": 128,
+        #     "hidden_3": 64,
+        #     "dropout": 0.30,
+        #     "learning_rate": 0.0005,
+        #     "batch_size": 512,
+        #     "epochs": 140,
+        #     "patience": 12,
+        #     "class_weights": {
+        #         0: 1.0,
+        #         1: 0.7,
+        #         2: 2.0,
+        #         3: 20.0,
+        #         4: 60.0
+        #     }
+        # },
+        # {
+        #     "name": "cw_5_probe_r2l_boost",
+        #     "hidden_1": 256,
+        #     "hidden_2": 128,
+        #     "hidden_3": 64,
+        #     "dropout": 0.30,
+        #     "learning_rate": 0.0005,
+        #     "batch_size": 512,
+        #     "epochs": 140,
+        #     "patience": 12,
+        #     "class_weights": {
+        #         0: 1.0,
+        #         1: 0.7,
+        #         2: 2.0,
+        #         3: 21.0,
+        #         4: 61.0
+        #     }
+        # }
     ]
 
 
