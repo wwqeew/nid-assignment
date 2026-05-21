@@ -34,21 +34,18 @@
 | 25 | SMOTEENN + Tuned XGBoost | 0.9412 ± 0.0295 | 0.6058 | combined oversampling and cleaning to improve R2L vs Normal separation |
 | 26 | Cost-sensitive XGBoost with `sample_weight` | 0.9506 ± 0.0204 | 0.5968 | Penalize mistakes on R2L and U2R more strongly without relying only on SMOTE |
 | 27 | Threshold / probability tuning for LightGBM | 0.9329 ± 0.0252 | 0.6080 | 0.48 score for U2R with multiplier 4.0 |
-
-| 29 | Feature selection + Tuned SMOTE XGBoost | 0.9412 ± 0.0295 | 0.6058 | Remove noisy/redundant features and test whether generalization improves |
-| 31 | k-NN with scaling and SMOTE | 0.7641 ± 0.0076 | 0.6358 | Test distance-based classification as an additional comparison |
+| 28 | SMOTE + MLP neural network | 0.8614 ± 0.0217 | 0.5919 | Test an actual neural network model for comparison, 
+| 29 | Voting ensemble of XGBoost, LightGBM, Random Forest | 0.9400 ± 0.0260 | 0.6168 | Raw voting had 0.5957 best score still was tuned voting, Combine strongest models and test whether ensemble improves macro F1 |
+| 30 | Feature selection + Tuned SMOTE XGBoost | 0.9412 ± 0.0295 | 0.6058 | Remove noisy/redundant features and test whether generalization improves |
+| 31 | Linear SVM with scaling and class weights | 0.8250 ± 0.0340 | 0.5549 | Test SVM as an alternative classifier for minority classes U2R was decent 0.37, but R2L was 0.06 |
+| 32 | k-NN with scaling and SMOTE | 0.7641 ± 0.0076 | 0.6358 | Test distance-based classification as an additional comparison |
 
 ## Planned experiments
 
 | No. | File | Model / Approach | Purpose |
 | --- | --- | --- | --- |
 
-| 11 | `11_threshold_tuning_lightgbm.py` | Threshold / probability tuning for LightGBM | Check whether LightGBM improves after R2L/U2R probability adjustment |
-| 12 | `12_mlp_neural_network.py` | SMOTE + MLP neural network | Test an actual neural network model for comparison |
-| 13 | `13_voting_ensemble.py` | Voting ensemble of XGBoost, LightGBM, Random Forest | Combine strongest models and test whether ensemble improves macro F1 |
-| 14 | `14_feature_selection_xgboost.py` | Feature selection + Tuned SMOTE XGBoost | Remove noisy/redundant features and test whether generalization improves |
-| 15 | `15_svm.py` | Linear SVM with scaling and class weights | Test SVM as an alternative classifier for minority classes |
-| 16 | `16_knn.py` | k-NN with scaling and SMOTE | Test distance-based classification as an additional comparison |
+
 
 ## Current best model
 
