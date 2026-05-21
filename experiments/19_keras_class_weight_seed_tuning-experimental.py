@@ -86,7 +86,7 @@ def make_candidate_configs():
             "hidden_1": 256,
             "hidden_2": 128,
             "hidden_3": 64,
-            "dropout": 0.20,
+            "dropout": 0.30,
             "learning_rate": 0.00005,
             "batch_size": 512,
             "epochs": 100,
@@ -94,8 +94,8 @@ def make_candidate_configs():
             "class_weights": {
                 0: 1.0,    # DoS
                 1: 0.7,    # Normal
-                2: 2.3,    # Probe
-                3: 20.1,   # R2L
+                2: 2.2,    # Probe
+                3: 20.0,   # R2L
                 4: 60.0    # U2R
             }
         },
@@ -104,16 +104,16 @@ def make_candidate_configs():
             "hidden_1": 256,
             "hidden_2": 128,
             "hidden_3": 64,
-            "dropout": 0.40,
+            "dropout": 0.20,
             "learning_rate": 0.00005,
             "batch_size": 512,
             "epochs": 100,
             "patience": 12,
             "class_weights": {
                 0: 1.0,
-                1: 0.7,
-                2: 2.3,
-                3: 20.1,
+                1: 0.65,
+                2: 2.19,
+                3: 20.01,
                 4: 60.0
             }
         },
