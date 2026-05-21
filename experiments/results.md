@@ -31,12 +31,15 @@
 | 22 | Keras categorical embeddings MLP | 0.8321 ± 0.0506 | 0.6578 | Tested a neural network with learned embeddings for categorical features instead of one-hot encoding. The best setup used embedding dimensions protocol=3, service=16, flag=4 and class weights {0: 1.0, 1: 0.7, 2: 2.0, 3: 20.0, 4: 60.0}. Achieved strong R2L detection with R2L F1 = 0.45, but did not beat experiment 19. |
 | 23 | Stacking: Keras + SMOTE XGBoost + Feature Selection XGBoost | 0.9259 ± 0.0317 | 0.5491 | Stacked exp19 Keras, exp04 SMOTE XGBoost, and exp14 Feature Selection XGBoost using out-of-fold predicted probabilities and logistic regression as the meta-model. Although meta-model CV on OOF features was high, the final KDDTest+ result collapsed to 0.5491 macro F1 because the meta-model did not generalize to unseen attack types and strongly underpredicted R2L/U2R. |
 | 24 | Voting: Keras + SMOTE XGBoost + Feature Selection XGBoost | 0.9430 ± 0.0320 | 0.5976 | Tested soft voting over exp19 Keras, exp04 SMOTE XGBoost, and exp14 Feature Selection XGBoost. Although CV and validation scores were high, the final KDDTest+ result dropped to 0.5976. The ensemble underpredicted R2L and U2R, with R2L F1 = 0.16 and U2R F1 = 0.36. |
+| 25 | SMOTEENN + Tuned XGBoost | 0.9412 ± 0.0295 | 0.6058 | combined oversampling and cleaning to improve R2L vs Normal separation |
+| 26 | Cost-sensitive XGBoost with `sample_weight` |
+| 31 | k-NN with scaling and SMOTE | 0.7641 ± 0.0076 | 0.6358 | Test distance-based classification as an additional comparison |
 
 ## Planned experiments
 
 | No. | File | Model / Approach | Purpose |
 | --- | --- | --- | --- |
-| 09 | `09_smoteenn_xgboost.py` | SMOTEENN + Tuned XGBoost | Try combined oversampling and cleaning to improve R2L vs Normal separation |
+
 | 10 | `10_weighted_xgboost.py` | Cost-sensitive XGBoost with `sample_weight` | Penalize mistakes on R2L and U2R more strongly without relying only on SMOTE |
 | 11 | `11_threshold_tuning_lightgbm.py` | Threshold / probability tuning for LightGBM | Check whether LightGBM improves after R2L/U2R probability adjustment |
 | 12 | `12_mlp_neural_network.py` | SMOTE + MLP neural network | Test an actual neural network model for comparison |
@@ -51,8 +54,9 @@
 | Model | CV Macro F1 | Test Macro F1 | Notes |
 | --- | ---: | ---: | --- |
 | Keras class weight + seed tuning | 0.8525 ± 0.0197 | 0.6646 | Best result so far; strongest overall macro F1 due to much better R2L detection |
+0: 1.0, 1: 0.7, 2: 2.0, 3: 20.0, 4: 60.0
 
-
+0.8227 ± 0.0057 | 0.6555 | 0: 1.0, 1: 0.65, 2: 2.0, 3: 18.0, 4: 70.0
 
 * 04_tuned_xgboost.py took around 15 minutes on colab
 * 06_threshold_tuning_xgboost.pybest: validation configuration kept all multipliers at 1.0
