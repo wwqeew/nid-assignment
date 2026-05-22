@@ -89,7 +89,7 @@ def make_candidate_configs():
             "dropout": 0.30,
             "learning_rate": 0.00005,
             "batch_size": 512,
-            "epochs": 100,
+            "epochs": 200,
             "patience": 12,
             "class_weights": {
                 0: 1.0,    # DoS
@@ -107,7 +107,7 @@ def make_candidate_configs():
             "dropout": 0.20,
             "learning_rate": 0.00005,
             "batch_size": 512,
-            "epochs": 100,
+            "epochs": 200,
             "patience": 12,
             "class_weights": {
                 0: 1.0,
