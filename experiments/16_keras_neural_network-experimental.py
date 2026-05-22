@@ -305,23 +305,23 @@ def main():
 
     candidate_configs = [
         {
-            "name": "keras_1_plain_deeper",
+            "name": "keras_1_balanced",
             "hidden_1": 256,
             "hidden_2": 128,
             "hidden_3": 64,
-            "dropout": 0.15,
+            "dropout": 0.18,
             "learning_rate": 0.00001,
             "batch_size": 512,
-            "epochs": 100,
-            "patience": 8,
-            "class_weight_mode": "none"
+            "epochs": 120,
+            "patience": 10,
+            "class_weight_mode": "balanced"
         },
         {
             "name": "keras_2_balanced_weights",
             "hidden_1": 256,
             "hidden_2": 128,
             "hidden_3": 64,
-            "dropout": 0.14,
+            "dropout": 0.12,
             "learning_rate": 0.00001,
             "batch_size": 512,
             "epochs": 120,
