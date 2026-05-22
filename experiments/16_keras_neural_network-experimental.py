@@ -100,6 +100,14 @@ def make_class_weights(y_encoded, mode):
             3: 6.0,    # R2L
             4: 30.0    # U2R
         }
+    if mode == "best":
+        return {
+            0: 1.0,
+            1: 0.67,
+            2: 2.22,
+            3: 19.95,
+            4: 60.0
+        }
 
     raise ValueError(f"Unknown class weight mode: {mode}")
 
@@ -354,13 +362,7 @@ def main():
             "batch_size": 512,
             "epochs": 180,
             "patience": 12,
-            "class_weight_mode": {
-                0: 1.0,
-                1: 0.67,
-                2: 2.22,
-                3: 19.95,
-                4: 60.0
-            }
+            "class_weight_mode": "best"
         }
     ]
 

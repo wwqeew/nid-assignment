@@ -49,7 +49,7 @@
 | No. | File | Model / Approach | Purpose |
 | --- | --- | --- | --- |
 
-| 34 | Change Hidden to 128 -> 64 -> 32
+| 34 | Change Hidden to 128 -> 64 -> 32 | Did it no significant changes |
 | 16 | Try best results implemented into 16_keras_neural_network to see does NN introduces better scores | 
 
 ## Current best model
