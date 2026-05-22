@@ -41,7 +41,7 @@
 | 32 | k-NN with scaling and SMOTE | 0.7641 ± 0.0076 | 0.6358 | Test distance-based classification as an additional comparison |
 | 33 | Keras class weight + seed tuning | 0.7623 ± 0.0219 | 0.6849 | Reducing step size and decreasing dropout, increases Recall score for R2L. Also while F1 final stays same, small differences are observed in CV Macro F1 scores while run on diff Computers, something makes slight randomization, another aspect these values brought matching of precision and recall for U2R |
 | 34 | Keras class weight + seed tuning | 0.7620 ± 0.0217 | 0.6907 | Decreasing value of normal traffic increases overall results for rest of the classes |
-| 35 | Keras + NN balanced weights | NA | 0.6912 | Weights calculated by script very unstable results each time gives different results, this was highest |
+| 35 | Keras + NN w. balanced weights | NA | 0.6912 | Weights calculated by script very unstable (volatile) results each time gives different results, this was highest |
 
 
 ## Planned experiments

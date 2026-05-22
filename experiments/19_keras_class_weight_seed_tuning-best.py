@@ -313,7 +313,7 @@ def tune_configs_on_validation(X_train, y_train_encoded):
 
     # seed 21 was strong in the previous experiment, so keep it here, 
     # Also no need to change seed, results are very similar accross results, therefor model is robust enough at any seed
-    seeds = [7, 21, 100]
+    seeds = [7, 100, 777]
 
     best_result = None
     all_results = []
