@@ -197,7 +197,8 @@ def train_and_evaluate_config(
         batch_size=config["batch_size"],
         class_weight=class_weights,
         callbacks=[early_stopping],
-        verbose=0
+        verbose=0,
+        shuffle=False
     )
 
     y_valid_pred_encoded = np.argmax(model.predict(X_valid, verbose=0), axis=1)
@@ -278,7 +279,8 @@ def run_simple_cv(config, X_train, y_train_encoded):
             batch_size=config["batch_size"],
             class_weight=class_weights,
             callbacks=[early_stopping],
-            verbose=0
+            verbose=0,
+            shuffle=False
         )
 
         y_pred_encoded = np.argmax(model.predict(X_fold_valid_processed, verbose=0), axis=1)
