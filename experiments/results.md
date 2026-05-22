@@ -42,6 +42,7 @@
 | 33 | Keras class weight + seed tuning | 0.7623 ± 0.0219 | 0.6849 | Reducing step size and decreasing dropout, increases Recall score for R2L. Also while F1 final stays same, small differences are observed in CV Macro F1 scores while run on diff Computers, something makes slight randomization, another aspect these values brought matching of precision and recall for U2R |
 | 34 | Keras class weight + seed tuning | 0.7620 ± 0.0217 | 0.6907 | Decreasing value of normal traffic increases overall results for rest of the classes |
 | 35 | Keras + NN w. balanced weights | NA | 0.6912 | Weights calculated by script very unstable (volatile) results each time gives different results, this was highest |
+| 36 | 16_keras_neural_network | 0.7058 ± 0.0140 | 0.6944 |keras_2_balanced_weights, highest score again but not stable results |
 
 
 ## Planned experiments
