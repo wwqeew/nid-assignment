@@ -311,11 +311,11 @@ def main():
             "hidden_1": 256,
             "hidden_2": 128,
             "hidden_3": 64,
-            "dropout": 0.19,
+            "dropout": 0.2,
             "learning_rate": 0.00001,
             "batch_size": 512,
             "epochs": 140,
-            "patience": 10,
+            "patience": 12,
             "class_weight_mode": "balanced"
         },
         {
@@ -323,11 +323,11 @@ def main():
             "hidden_1": 256,
             "hidden_2": 128,
             "hidden_3": 64,
-            "dropout": 0.19,
+            "dropout": 0.2,
             "learning_rate": 0.00001,
             "batch_size": 512,
             "epochs": 140,
-            "patience": 8,
+            "patience": 12,
             "class_weight_mode": "balanced"
         },
         {
@@ -335,12 +335,12 @@ def main():
             "hidden_1": 256,
             "hidden_2": 128,
             "hidden_3": 64,
-            "dropout": 0.19,
+            "dropout": 0.12,
             "learning_rate": 0.00001,
             "batch_size": 512,
             "epochs": 140,
-            "patience": 10,
-            "class_weight_mode": "soft_custom"
+            "patience": 12,
+            "class_weight_mode": "custom"
         },
         {
             "name": "keras_4_custom_weights",
@@ -359,7 +359,7 @@ def main():
             "hidden_1": 256,
             "hidden_2": 128,
             "hidden_3": 64,
-            "dropout": 0.19,
+            "dropout": 0.25,
             "learning_rate": 0.00001,
             "batch_size": 512,
             "epochs": 180,
