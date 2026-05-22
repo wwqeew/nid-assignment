@@ -41,6 +41,7 @@
 | 32 | k-NN with scaling and SMOTE | 0.7641 ± 0.0076 | 0.6358 | Test distance-based classification as an additional comparison |
 | 33 | Keras class weight + seed tuning | 0.7623 ± 0.0219 | 0.6849 | Reducing step size and decreasing dropout, increases Recall score for R2L. Also while F1 final stays same, small differences are observed in CV Macro F1 scores while run on diff Computers, something makes slight randomization, another aspect these values brought matching of precision and recall for U2R |
 | 34 | Keras class weight + seed tuning | 0.7620 ± 0.0217 | 0.6907 | Decreasing value of normal traffic increases overall results for rest of the classes |
+| 35 | Keras class weight | 
 
 
 ## Planned experiments
@@ -48,6 +49,7 @@
 | No. | File | Model / Approach | Purpose |
 | --- | --- | --- | --- |
 
+| 34 | Change Hidden to 128 -> 64 -> 32
 | 16 | Try best results implemented into 16_keras_neural_network to see does NN introduces better scores | 
 
 ## Current best model
@@ -56,8 +58,9 @@
 | Model | CV Macro F1 | Test Macro F1 | Notes |
 | --- | ---: | ---: | --- |
 
-| Best | Keras class weight + seed tuning | 0.7623 ± 0.0219 | 0.6849 | Reducing step size to 1e-05 increases Recall score for R2L. Also weight change for one index changes results for others |
-{0: 1.0, 1: 0.68, 2: 2.21, 3: 20.0, 4: 60.0}
+| Best 34| Keras class weight + seed tuning | 0.7620 ± 0.0217 | 0.6907 | Decreasing value of normal traffic increases overall results for rest of the classes |
+old:{0: 1.0, 1: 0.68, 2: 2.21, 3: 20.0, 4: 60.0}
+new:{0: 1.0, 1: 0.67, 2: 2.22, 3: 19.95, 4: 60.0}
 
 * 04_tuned_xgboost.py took around 15 minutes on colab
 * 06_threshold_tuning_xgboost.pybest: validation configuration kept all multipliers at 1.0
