@@ -321,10 +321,10 @@ def main():
             "hidden_1": 256,
             "hidden_2": 128,
             "hidden_3": 64,
-            "dropout": 0.15,
+            "dropout": 0.14,
             "learning_rate": 0.00001,
             "batch_size": 512,
-            "epochs": 100,
+            "epochs": 120,
             "patience": 8,
             "class_weight_mode": "balanced"
         },
