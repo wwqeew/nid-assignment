@@ -39,7 +39,7 @@
 | 30 | Feature selection + Tuned SMOTE XGBoost | 0.9412 ± 0.0295 | 0.6058 | Remove noisy/redundant features and test whether generalization improves |
 | 31 | Linear SVM with scaling and class weights | 0.8250 ± 0.0340 | 0.5549 | Test SVM as an alternative classifier for minority classes U2R was decent 0.37, but R2L was 0.06 |
 | 32 | k-NN with scaling and SMOTE | 0.7641 ± 0.0076 | 0.6358 | Test distance-based classification as an additional comparison |
-| 33 | Keras class weight + seed tuning | 0.7623 ± 0.0219 | 0.6849 | Reducing step size and decreasing dropout, increases Recall score for R2L |
+| 33 | Keras class weight + seed tuning | 0.7623 ± 0.0219 | 0.6849 | Reducing step size and decreasing dropout, increases Recall score for R2L, also while F1 final stays same, small differences are observed in CV Macro F1 scores while run on diff Computers, something makes slight randomization, another aspect these values brought matching of precision and recall for U2R |
 | 34 | Keras class weight + seed tuning | 
 
 ## Planned experiments
@@ -57,7 +57,7 @@
 | Keras class weight + seed tuning | 0.8525 ± 0.0197 | 0.6646 | Best result so far; strongest overall macro F1 due to much better R2L detection |
 0: 1.0, 1: 0.7, 2: 2.0, 3: 20.0, 4: 60.0
 
-| Best | Keras class weight + seed tuning | 0.7623 ± 0.0219 | 0.6849 | Reducing step size increases Recall score for R2L |
+| Best | Keras class weight + seed tuning | 0.7623 ± 0.0219 | 0.6849 | Reducing step size to 1e-05 increases Recall score for R2L |
 
 * 04_tuned_xgboost.py took around 15 minutes on colab
 * 06_threshold_tuning_xgboost.pybest: validation configuration kept all multipliers at 1.0
