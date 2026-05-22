@@ -100,11 +100,11 @@ def make_candidate_configs():
         #     }
         # },
         {
-            "name": "cw_2_weight_change_R2L",
+            "name": "cw_2_weight_change_U2R_dropout_increase",
             "hidden_1": 256,
             "hidden_2": 128,
             "hidden_3": 64,
-            "dropout": 0.15,
+            "dropout": 0.23,
             "learning_rate": 0.00001,
             "batch_size": 512,
             "epochs": 180,
@@ -113,8 +113,8 @@ def make_candidate_configs():
                 0: 1.0,
                 1: 0.67,
                 2: 2.23,
-                3: 19.94,
-                4: 59.8
+                3: 19.95,
+                4: 60.1
             }
         },
         #         {
@@ -331,7 +331,7 @@ def tune_configs_on_validation(X_train, y_train_encoded):
 
     # seed 21 was strong in the previous experiment, so keep it here, 
     # Also no need to change seed, results are very similar accross results, therefor model is robust enough at any seed
-    seeds = [7, 21, 100, 777]
+    seeds = [7, 100, 777]
 
     best_result = None
     all_results = []
