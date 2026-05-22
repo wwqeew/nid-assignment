@@ -81,30 +81,30 @@ def set_all_seeds(seed):
 def make_candidate_configs():
     # configs focus on r2l recall while trying not to destroy u2r
     return [
-        #{
-        #     "name": "cw_1_current_best",
-        #     "hidden_1": 256,
-        #     "hidden_2": 128,
-        #     "hidden_3": 64,
-        #     "dropout": 0.20,
-        #     "learning_rate": 0.00001,
-        #     "batch_size": 512,
-        #     "epochs": 180,
-        #     "patience": 12,
-        #     "class_weights": {
-        #         0: 1.0,
-        #         1: 0.67,
-        #         2: 2.22,
-        #         3: 19.95,
-        #         4: 60.0
-        #     }
-        # },
+        {
+            "name": "cw_1_current_best",
+            "hidden_1": 256,
+            "hidden_2": 128,
+            "hidden_3": 64,
+            "dropout": 0.20,
+            "learning_rate": 0.00001,
+            "batch_size": 512,
+            "epochs": 180,
+            "patience": 12,
+            "class_weights": {
+                0: 1.0,
+                1: 0.67,
+                2: 2.22,
+                3: 19.95,
+                4: 60.0
+            }
+        },
         {
             "name": "cw_2_weight_change_U2R_dropout_increase",
             "hidden_1": 256,
             "hidden_2": 128,
             "hidden_3": 64,
-            "dropout": 0.23,
+            "dropout": 0.17,
             "learning_rate": 0.00001,
             "batch_size": 512,
             "epochs": 180,
@@ -113,28 +113,28 @@ def make_candidate_configs():
                 0: 1.0,
                 1: 0.67,
                 2: 2.23,
-                3: 19.95,
-                4: 60.1
+                3: 19.96,
+                4: 60.0
             }
         },
-        #         {
-        #     "name": "cw_3_hidden_change",
-        #     "hidden_1": 128,
-        #     "hidden_2": 64,
-        #     "hidden_3": 32,
-        #     "dropout": 0.2,
-        #     "learning_rate": 0.00001,
-        #     "batch_size": 512,
-        #     "epochs": 180,
-        #     "patience": 12,
-        #     "class_weights": {
-        #         0: 1.0,
-        #         1: 0.67,
-        #         2: 2.23,
-        #         3: 19.96,
-        #         4: 60.0
-        #     }
-        # },
+                {
+            "name": "cw_3_best_result_replica",
+            "hidden_1": 128,
+            "hidden_2": 64,
+            "hidden_3": 32,
+            "dropout": 0.2,
+            "learning_rate": 0.00001,
+            "batch_size": 512,
+            "epochs": 180,
+            "patience": 12,
+            "class_weights": {
+                0: 0.54858,
+                1: 0.37412,
+                2: 2.16145,
+                3: 25.3211,
+                4: 479.8952
+            }
+        },
         # {
         #     "name": "cw_3_even_more_r2l",
         #     "hidden_1": 256,
