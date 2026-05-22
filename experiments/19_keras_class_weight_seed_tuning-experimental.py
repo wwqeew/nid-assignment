@@ -87,7 +87,7 @@ def make_candidate_configs():
             "hidden_2": 128,
             "hidden_3": 64,
             "dropout": 0.30,
-            "learning_rate": 0.00005,
+            "learning_rate": 0.00001,
             "batch_size": 512,
             "epochs": 200,
             "patience": 12,
@@ -105,15 +105,15 @@ def make_candidate_configs():
             "hidden_2": 128,
             "hidden_3": 64,
             "dropout": 0.20,
-            "learning_rate": 0.00005,
+            "learning_rate": 0.00001,
             "batch_size": 512,
             "epochs": 200,
             "patience": 12,
             "class_weights": {
                 0: 1.0,
-                1: 0.65,
-                2: 2.19,
-                3: 20.01,
+                1: 0.68,
+                2: 2.21,
+                3: 20.0,
                 4: 60.0
             }
         },
