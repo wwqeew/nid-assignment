@@ -345,16 +345,22 @@ def main():
             "class_weight_mode": "custom"
         },
         {
-            "name": "keras_5_wider_plain",
-            "hidden_1": 512,
-            "hidden_2": 256,
-            "hidden_3": 128,
-            "dropout": 0.30,
-            "learning_rate": 0.0007,
+            "name": "keras_5_best",
+            "hidden_1": 256,
+            "hidden_2": 128,
+            "hidden_3": 64,
+            "dropout": 0.20,
+            "learning_rate": 0.00001,
             "batch_size": 512,
-            "epochs": 120,
-            "patience": 10,
-            "class_weight_mode": "none"
+            "epochs": 180,
+            "patience": 12,
+            "class_weight_mode": {
+                0: 1.0,
+                1: 0.67,
+                2: 2.22,
+                3: 19.95,
+                4: 60.0
+            }
         }
     ]
 
