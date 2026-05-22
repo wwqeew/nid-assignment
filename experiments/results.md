@@ -47,7 +47,7 @@
 | No. | File | Model / Approach | Purpose |
 | --- | --- | --- | --- |
 
-
+| 16 | Try best results implemented into 16_keras_neural_network to see does NN introduces better scores | 
 
 ## Current best model
 
