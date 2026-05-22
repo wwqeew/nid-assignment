@@ -100,20 +100,20 @@ def make_candidate_configs():
         #     }
         # },
         {
-            "name": "cw_2_less_dropout_bigger_step_weight_change",
+            "name": "cw_2_small_step_weight_change",
             "hidden_1": 256,
             "hidden_2": 128,
             "hidden_3": 64,
             "dropout": 0.20,
-            "learning_rate": 0.0001,
+            "learning_rate": 0.00001,
             "batch_size": 512,
             "epochs": 180,
             "patience": 12,
             "class_weights": {
                 0: 1.0,
-                1: 0.7,
+                1: 0.67,
                 2: 2.22,
-                3: 20.01,
+                3: 19.95,
                 4: 60.0
             }
         },
