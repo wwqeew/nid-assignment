@@ -100,7 +100,7 @@ def make_candidate_configs():
             }
         },
         {
-            "name": "cw_2_less_dropout_smaller_learn_step",
+            "name": "cw_2_more_r2l",
             "hidden_1": 256,
             "hidden_2": 128,
             "hidden_3": 64,
