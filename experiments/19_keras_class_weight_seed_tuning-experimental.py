@@ -81,7 +81,7 @@ def set_all_seeds(seed):
 def make_candidate_configs():
     # configs focus on r2l recall while trying not to destroy u2r
     return [
-        {
+        #{
         #     "name": "cw_1_current_best",
         #     "hidden_1": 256,
         #     "hidden_2": 128,
