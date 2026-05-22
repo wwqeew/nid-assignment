@@ -102,11 +102,11 @@ def make_class_weights(y_encoded, mode):
         }
     if mode == "best":
         return {
-            0: 1.0,
-            1: 0.68,
-            2: 2.1,
-            3: 19.95,
-            4: 60.0
+            0: 0.54,
+            1: 0.37,
+            2: 2.16,
+            3: 25.32,
+            4: 479.0
         }
 
     raise ValueError(f"Unknown class weight mode: {mode}")
@@ -305,26 +305,26 @@ def main():
 
     candidate_configs = [
         {
-            "name": "keras_1_plain_deeper",
+            "name": "keras_1_balanced",
             "hidden_1": 256,
             "hidden_2": 128,
             "hidden_3": 64,
-            "dropout": 0.15,
+            "dropout": 0.18,
             "learning_rate": 0.00001,
             "batch_size": 512,
-            "epochs": 100,
-            "patience": 8,
-            "class_weight_mode": "none"
+            "epochs": 120,
+            "patience": 10,
+            "class_weight_mode": "balanced"
         },
         {
             "name": "keras_2_balanced_weights",
             "hidden_1": 256,
             "hidden_2": 128,
             "hidden_3": 64,
-            "dropout": 0.15,
+            "dropout": 0.12,
             "learning_rate": 0.00001,
             "batch_size": 512,
-            "epochs": 100,
+            "epochs": 120,
             "patience": 8,
             "class_weight_mode": "balanced"
         },
@@ -357,7 +357,7 @@ def main():
             "hidden_1": 256,
             "hidden_2": 128,
             "hidden_3": 64,
-            "dropout": 0.10,
+            "dropout": 0.15,
             "learning_rate": 0.00001,
             "batch_size": 512,
             "epochs": 180,
