@@ -95,9 +95,9 @@ def make_class_weights(y_encoded, mode):
         # less aggressive custom weights for neural network stability
         return {
             0: 1.0,    # DoS
-            1: 0.7,    # Normal
-            2: 2.2,    # Probe
-            3: 20.0,    # R2L
+            1: 0.67,    # Normal
+            2: 2.21,    # Probe
+            3: 19.95,    # R2L
             4: 60.0    # U2R
         }
     if mode == "best":
@@ -312,9 +312,9 @@ def main():
             "hidden_2": 128,
             "hidden_3": 64,
             "dropout": 0.19,
-            "learning_rate": 0.0001,
+            "learning_rate": 0.00001,
             "batch_size": 512,
-            "epochs": 120,
+            "epochs": 140,
             "patience": 10,
             "class_weight_mode": "balanced"
         },
@@ -324,9 +324,9 @@ def main():
             "hidden_2": 128,
             "hidden_3": 64,
             "dropout": 0.19,
-            "learning_rate": 0.0001,
+            "learning_rate": 0.00001,
             "batch_size": 512,
-            "epochs": 120,
+            "epochs": 140,
             "patience": 8,
             "class_weight_mode": "balanced"
         },
@@ -336,9 +336,9 @@ def main():
             "hidden_2": 128,
             "hidden_3": 64,
             "dropout": 0.19,
-            "learning_rate": 0.0001,
+            "learning_rate": 0.00001,
             "batch_size": 512,
-            "epochs": 120,
+            "epochs": 140,
             "patience": 10,
             "class_weight_mode": "soft_custom"
         },
@@ -348,9 +348,9 @@ def main():
             "hidden_2": 128,
             "hidden_3": 64,
             "dropout": 0.19,
-            "learning_rate": 0.0001,
+            "learning_rate": 0.00001,
             "batch_size": 512,
-            "epochs": 120,
+            "epochs": 140,
             "patience": 10,
             "class_weight_mode": "custom"
         },
@@ -360,7 +360,7 @@ def main():
             "hidden_2": 128,
             "hidden_3": 64,
             "dropout": 0.19,
-            "learning_rate": 0.0001,
+            "learning_rate": 0.00001,
             "batch_size": 512,
             "epochs": 180,
             "patience": 12,
