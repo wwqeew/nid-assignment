@@ -113,28 +113,28 @@ def make_candidate_configs():
                 0: 1.0,
                 1: 0.67,
                 2: 2.23,
-                3: 19.96,
-                4: 60.0
+                3: 19.94,
+                4: 59.8
             }
         },
-                {
-            "name": "cw_3_hidden_change",
-            "hidden_1": 128,
-            "hidden_2": 64,
-            "hidden_3": 32,
-            "dropout": 0.2,
-            "learning_rate": 0.00001,
-            "batch_size": 512,
-            "epochs": 180,
-            "patience": 12,
-            "class_weights": {
-                0: 1.0,
-                1: 0.67,
-                2: 2.23,
-                3: 19.96,
-                4: 60.0
-            }
-        },
+        #         {
+        #     "name": "cw_3_hidden_change",
+        #     "hidden_1": 128,
+        #     "hidden_2": 64,
+        #     "hidden_3": 32,
+        #     "dropout": 0.2,
+        #     "learning_rate": 0.00001,
+        #     "batch_size": 512,
+        #     "epochs": 180,
+        #     "patience": 12,
+        #     "class_weights": {
+        #         0: 1.0,
+        #         1: 0.67,
+        #         2: 2.23,
+        #         3: 19.96,
+        #         4: 60.0
+        #     }
+        # },
         # {
         #     "name": "cw_3_even_more_r2l",
         #     "hidden_1": 256,
