@@ -102,10 +102,10 @@ def make_class_weights(y_encoded, mode):
         }
     if mode == "best":
         return {
-            0: 0.54,
+            0: 0.7,
             1: 0.37,
-            2: 2.16,
-            3: 25.32,
+            2: 2.2,
+            3: 20.0,
             4: 479.0
         }
 
@@ -331,11 +331,11 @@ def main():
             "class_weight_mode": "balanced"
         },
         {
-            "name": "keras_3_soft_custom_weights",
+            "name": "keras_3_custom_weights",
             "hidden_1": 256,
             "hidden_2": 128,
             "hidden_3": 64,
-            "dropout": 0.12,
+            "dropout": 0.10,
             "learning_rate": 0.00001,
             "batch_size": 512,
             "epochs": 140,
@@ -347,7 +347,7 @@ def main():
             "hidden_1": 256,
             "hidden_2": 128,
             "hidden_3": 64,
-            "dropout": 0.19,
+            "dropout": 0.2,
             "learning_rate": 0.00001,
             "batch_size": 512,
             "epochs": 140,
