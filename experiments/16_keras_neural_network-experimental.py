@@ -95,16 +95,16 @@ def make_class_weights(y_encoded, mode):
         # less aggressive custom weights for neural network stability
         return {
             0: 1.0,    # DoS
-            1: 0.8,    # Normal
-            2: 1.5,    # Probe
-            3: 6.0,    # R2L
-            4: 30.0    # U2R
+            1: 0.7,    # Normal
+            2: 2.2,    # Probe
+            3: 20.0,    # R2L
+            4: 60.0    # U2R
         }
     if mode == "best":
         return {
             0: 1.0,
-            1: 0.67,
-            2: 2.22,
+            1: 0.68,
+            2: 2.1,
             3: 19.95,
             4: 60.0
         }
@@ -357,7 +357,7 @@ def main():
             "hidden_1": 256,
             "hidden_2": 128,
             "hidden_3": 64,
-            "dropout": 0.15,
+            "dropout": 0.10,
             "learning_rate": 0.00001,
             "batch_size": 512,
             "epochs": 180,
