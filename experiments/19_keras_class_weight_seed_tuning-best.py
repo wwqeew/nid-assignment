@@ -89,31 +89,31 @@ def make_candidate_configs():
             "dropout": 0.20,
             "learning_rate": 0.00001,
             "batch_size": 512,
-            "epochs": 200,
-            "patience": 12,
-            "class_weights": {
-                0: 1.0,    # DoS
-                1: 0.68,    # Normal
-                2: 2.21,    # Probe
-                3: 20.0,   # R2L
-                4: 60.0    # U2R
-            }
-        },
-        {
-            "name": "cw_2_more_r2l",
-            "hidden_1": 256,
-            "hidden_2": 128,
-            "hidden_3": 64,
-            "dropout": 0.10,
-            "learning_rate": 0.000001,
-            "batch_size": 512,
-            "epochs": 200,
+            "epochs": 180,
             "patience": 12,
             "class_weights": {
                 0: 1.0,
-                1: 0.68,
-                2: 2.21,
-                3: 20.0,
+                1: 0.67,
+                2: 2.22,
+                3: 19.95,
+                4: 60.0
+            }
+        },
+        {
+            "name": "cw_2_weight_change_R2L_probe_dropout",
+            "hidden_1": 256,
+            "hidden_2": 128,
+            "hidden_3": 64,
+            "dropout": 0.15,
+            "learning_rate": 0.00001,
+            "batch_size": 512,
+            "epochs": 180,
+            "patience": 12,
+            "class_weights": {
+                0: 1.0,
+                1: 0.67,
+                2: 2.23,
+                3: 19.94,
                 4: 60.0
             }
         },
@@ -311,8 +311,9 @@ def tune_configs_on_validation(X_train, y_train_encoded):
 
     candidate_configs = make_candidate_configs()
 
-    # seed 21 was strong in the previous experiment, so keep it here
-    seeds = [42, 21, 100]
+    # seed 21 was strong in the previous experiment, so keep it here, 
+    # Also no need to change seed, results are very similar accross results, therefor model is robust enough at any seed
+    seeds = [7, 21, 100]
 
     best_result = None
     all_results = []
