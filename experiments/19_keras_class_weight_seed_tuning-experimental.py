@@ -89,18 +89,18 @@ def make_candidate_configs():
         #     "dropout": 0.20,
         #     "learning_rate": 0.00001,
         #     "batch_size": 512,
-        #     "epochs": 200,
+        #     "epochs": 180,
         #     "patience": 12,
         #     "class_weights": {
-        #         0: 1.0,    # DoS
-        #         1: 0.68,    # Normal
-        #         2: 2.21,    # Probe
-        #         3: 20.0,   # R2L
-        #         4: 60.0    # U2R
+        #         0: 1.0,
+        #         1: 0.67,
+        #         2: 2.22,
+        #         3: 19.95,
+        #         4: 60.0
         #     }
         # },
         {
-            "name": "cw_2_small_step_weight_change",
+            "name": "cw_2_less_w_normal_change_seed_7",
             "hidden_1": 256,
             "hidden_2": 128,
             "hidden_3": 64,
@@ -111,7 +111,7 @@ def make_candidate_configs():
             "patience": 12,
             "class_weights": {
                 0: 1.0,
-                1: 0.67,
+                1: 0.66,
                 2: 2.22,
                 3: 19.95,
                 4: 60.0
@@ -312,7 +312,7 @@ def tune_configs_on_validation(X_train, y_train_encoded):
     candidate_configs = make_candidate_configs()
 
     # seed 21 was strong in the previous experiment, so keep it here
-    seeds = [42, 21, 100]
+    seeds = [7, 42, 21, 100]
 
     best_result = None
     all_results = []
