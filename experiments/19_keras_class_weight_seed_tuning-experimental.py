@@ -100,7 +100,7 @@ def make_candidate_configs():
         #     }
         # },
         {
-            "name": "cw_2_weight_change_R2L_probe_dropout",
+            "name": "cw_2_weight_change_R2L",
             "hidden_1": 256,
             "hidden_2": 128,
             "hidden_3": 64,
@@ -113,7 +113,25 @@ def make_candidate_configs():
                 0: 1.0,
                 1: 0.67,
                 2: 2.23,
-                3: 19.94,
+                3: 19.96,
+                4: 60.0
+            }
+        },
+                {
+            "name": "cw_3_hidden_change",
+            "hidden_1": 128,
+            "hidden_2": 64,
+            "hidden_3": 32,
+            "dropout": 0.2,
+            "learning_rate": 0.00001,
+            "batch_size": 512,
+            "epochs": 180,
+            "patience": 12,
+            "class_weights": {
+                0: 1.0,
+                1: 0.67,
+                2: 2.23,
+                3: 19.96,
                 4: 60.0
             }
         },
@@ -313,7 +331,7 @@ def tune_configs_on_validation(X_train, y_train_encoded):
 
     # seed 21 was strong in the previous experiment, so keep it here, 
     # Also no need to change seed, results are very similar accross results, therefor model is robust enough at any seed
-    seeds = [7, 21, 100]
+    seeds = [7, 21, 100, 777]
 
     best_result = None
     all_results = []
