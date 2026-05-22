@@ -312,7 +312,7 @@ def main():
             "hidden_2": 128,
             "hidden_3": 64,
             "dropout": 0.2,
-            "learning_rate": 0.00001,
+            "learning_rate": 0.000001,
             "batch_size": 512,
             "epochs": 140,
             "patience": 12,
@@ -335,37 +335,37 @@ def main():
             "hidden_1": 256,
             "hidden_2": 128,
             "hidden_3": 64,
-            "dropout": 0.10,
-            "learning_rate": 0.00001,
-            "batch_size": 512,
-            "epochs": 140,
-            "patience": 12,
-            "class_weight_mode": "custom"
-        },
-        {
-            "name": "keras_4_custom_weights",
-            "hidden_1": 256,
-            "hidden_2": 128,
-            "hidden_3": 64,
-            "dropout": 0.2,
-            "learning_rate": 0.00001,
-            "batch_size": 512,
-            "epochs": 140,
-            "patience": 10,
-            "class_weight_mode": "custom"
-        },
-        {
-            "name": "keras_5_best",
-            "hidden_1": 256,
-            "hidden_2": 128,
-            "hidden_3": 64,
             "dropout": 0.25,
             "learning_rate": 0.00001,
             "batch_size": 512,
-            "epochs": 180,
+            "epochs": 140,
             "patience": 12,
-            "class_weight_mode": "best"
-        }
+            "class_weight_mode": "custom"
+        },
+        # {
+        #     "name": "keras_4_custom_weights",
+        #     "hidden_1": 256,
+        #     "hidden_2": 128,
+        #     "hidden_3": 64,
+        #     "dropout": 0.2,
+        #     "learning_rate": 0.00001,
+        #     "batch_size": 512,
+        #     "epochs": 140,
+        #     "patience": 10,
+        #     "class_weight_mode": "custom"
+        # },
+        # {
+        #     "name": "keras_5_best",
+        #     "hidden_1": 256,
+        #     "hidden_2": 128,
+        #     "hidden_3": 64,
+        #     "dropout": 0.25,
+        #     "learning_rate": 0.00001,
+        #     "batch_size": 512,
+        #     "epochs": 180,
+        #     "patience": 12,
+        #     "class_weight_mode": "best"
+        # }
     ]
 
     best_result = None
