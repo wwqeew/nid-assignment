@@ -99,8 +99,26 @@ def make_candidate_configs():
                 4: 60.0
             }
         },
+                {
+            "name": "cw_2_current_best",
+            "hidden_1": 256,
+            "hidden_2": 128,
+            "hidden_3": 64,
+            "dropout": 0.20,
+            "learning_rate": 0.000001,
+            "batch_size": 512,
+            "epochs": 140,
+            "patience": 12,
+            "class_weights": {
+                0: 1.0,
+                1: 0.67,
+                2: 2.22,
+                3: 19.95,
+                4: 60.0
+            }
+        },
         {
-            "name": "cw_2_weight_change_U2R_dropout_increase",
+            "name": "cw_3_weight_change_U2R_dropout_increase",
             "hidden_1": 256,
             "hidden_2": 128,
             "hidden_3": 64,
@@ -118,7 +136,7 @@ def make_candidate_configs():
             }
         },
                 {
-            "name": "cw_3_best_result_replica",
+            "name": "cw_4_best_result_replica",
             "hidden_1": 128,
             "hidden_2": 64,
             "hidden_3": 32,
