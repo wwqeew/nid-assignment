@@ -16,26 +16,37 @@ Repository link: [[GitHub](https://github.com/wwqeew/nid-assignment)]
 
 ### 1.1 Strategy Overview
 
-Briefly describe your overall strategy. What was your plan before you started experimenting? Probably none, but you may write so as well.
+Our overall strategy was focused on improving detection of minority attack classes (R2L and U2R), because the baseline models handled Normal and DoS traffic relatively well but almost completely failed on rare attacks. Major part of the experiments focused on handling class imbalance using SMOTE, SMOTEENN, custom class weights, and probability threshold tuning. After tree-based models stopped showing significant improvement and remained around 0.60 macro F1-score, we shifted our focus toward Keras neural networks. 
 
-[Your strategy — e.g., "We decided to focus on improving R2L/U2R detection using SMOTE and gradient boosting."]
+We also experimented with feature engineering, feature selection, stacking ensembles, voting ensembles, threshold tuning, and categorical embeddings.
 
 ### 1.2 Preprocessing
 
 Describe any changes you made to the data beyond the starter code:
 
-- **Feature engineering:** [Did you create new features? Which ones and why?]
-- **Feature selection:** [Did you remove any features? Based on what criteria?]
-- **Scaling:** [Did you apply StandardScaler, MinMaxScaler, or none?]
-- **Other:** [Any other preprocessing steps?]
+- **Feature engineering:** Several additional features were created during experiments. Traffic ratio and interaction-based features such as byte ratios, combinations of connection statistics that could better separate minority attack classes from normal traffic. Feature engineering mainly targeted improving R2L and U2R detection.
+- **Feature selection:** Feature selection was tested in later experiments. Low-importance and redundant features were removed based on XGBoost feature importance scores. Encoded feature set was reduced from 121 features to approximately 61 features in some experiments. This slightly improved generalization and reduced noise.
+- **Scaling:** StandardScaler was applied for models sensitive to feature magnitude, especially SVM and neural network experiments. Tree-based models such as Random Forest, XGBoost, and LightGBM were mostly trained without scaling because they are less sensitive to feature scales.
+- **Other:** Categorical features were encoded as numerical values using label encoding. In later experiments, we also tested neural-network embeddings for categorical features instead of traditional encoded representations. Random seeds were fixed in most experiments to improve reproducibility, although neural network experiments still showed noticeable instability between runs.
 
 ### 1.3 Class Imbalance Handling
 
-How did you address the imbalance between classes?
+Because NSL-KDD is highly imbalanced, especially for U2R attacks, handling imbalance became the main focus.
 
-- **Method used:** [SMOTE / class_weight / undersampling / combination / none]
-- **Parameters:** [e.g., SMOTE with k_neighbors=5, or class_weight='balanced']
-- **Effect on training set distribution:** [how did the class distribution change?]
+- **Method used:**  
+  - SMOTE oversampling
+  - SMOTEENN hybrid resampling
+  - `class_weight='balanced'`
+  - Manually tuned custom class weights
+  - Sample weighting
+  - Threshold/probability tuning
+  - Ensemble-based balancing approaches
+
+- **Parameters:**  
+  Most SMOTE experiments used default `k_neighbors=5` configuration, while later experiments manually adjusted minority target sizes for R2L and U2R. Neural network experiments used aggressively tuned custom class weights to force the model to pay more attention to minority attack classes. Some experiments also used threshold multipliers to increase minority-class prediction probability.
+
+- **Effect on training set distribution:**  
+  SMOTE and SMOTEENN significantly increased number of minority-class samples, especially for R2L and U2R, creating much more balanced training distribution. This improved recall for rare attacks but sometimes reduced precision and introduced instability or overfitting. Custom class weights achieved better balance without directly modifying the dataset and produced the best overall results in later Keras experiments.
 
 ---
 
