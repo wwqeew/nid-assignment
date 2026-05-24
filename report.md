@@ -335,6 +335,7 @@ Because NSL-KDD is highly imbalanced, especially for U2R attacks, handling imbal
 
 ### Experiments Summary
 
+**Part 1:**  
 | # | Description | Algorithm | Imbalance Handling | Macro F1 (CV) | Macro F1 (test) |
 | --- | --- | --- | --- | --- | --- |
 | 1 | Random Forest baseline | Random Forest | `class_weight='balanced'` tested | 0.9126 ± 0.0371 | 0.4707 |
@@ -361,6 +362,10 @@ Because NSL-KDD is highly imbalanced, especially for U2R attacks, handling imbal
 | 22 | Keras categorical embeddings MLP | Keras NN with embeddings | Custom class weights | 0.8321 ± 0.0506 | 0.6578 |
 | 23 | Stacking Keras + XGBoost | Stacking Ensemble | Mixed model-level handling | 0.9259 ± 0.0317 | 0.5491 |
 | 24 | Voting Keras + XGBoost | Soft Voting Ensemble | Mixed model-level handling | 0.9430 ± 0.0320 | 0.5976 |
+
+**Part 2:**  
+| Experiment | Model | CV Macro F1 | Test Macro F1 | Observation |
+| --- | --- | ---: | ---: | --- |
 | 25 | SMOTEENN + Tuned XGBoost | 0.9412 ± 0.0295 | 0.6058 | combined oversampling and cleaning to improve R2L vs Normal separation |
 | 26 | Cost-sensitive XGBoost with `sample_weight` | 0.9506 ± 0.0204 | 0.5968 | Penalize mistakes on R2L and U2R more strongly without relying only on SMOTE |
 | 27 | Threshold / probability tuning for LightGBM | 0.9329 ± 0.0252 | 0.6080 | 0.48 score for U2R with multiplier 4.0 |
