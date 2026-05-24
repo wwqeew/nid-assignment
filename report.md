@@ -434,9 +434,7 @@ Final Keras model showed instability. Reported final score was obtained on the e
 
  * Custom and balanced class weights helped model pay more attention to rare attack categories. R2L and U2R were the main reason why earlier models had low macro F1. 
 
- * Another useful change was reducing instability in neural network training process. Disabling shuffling in some parts of the training process and reusing best Keras weight configuration helped produce more stable and reproducible results than earlier neural network runs.
-  
- * Limitation was neural network reproducibility. Even with fixed random seeds, Keras/TensorFlow training was not fully deterministic across different environments. Same model produced best recorded score of 0.7139, while repeated Kaggle and Colab runs were usually around 0.68 macro F1. This suggests that the model is sensitive to GPU/runtime differences and early stopping behavior.
+ * Limitation was neural network reproducibility. Even with fixed random seeds, Keras/TensorFlow training was not fully deterministic across different environments. Same model produced best recorded score of 0.7139, while repeated Kaggle and Colab runs were usually around 0.68 macro F1. This suggests that the model is sensitive to GPU/runtime differences and early stopping behavior. Disabling shuffling in some parts of the training process and reusing best Keras weight configuration helped produce more stable and reproducible results than earlier neural network runs.
 
 ### What surprisingly didn't help?
 
