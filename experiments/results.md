@@ -57,7 +57,6 @@
 
 | Model | CV Macro F1 | Test Macro F1 | Notes |
 | --- | ---: | ---: | --- |
-
 | Best 34| Keras class weight + seed tuning | 0.7620 ± 0.0217 | 0.6907 | Decreasing value of normal traffic increases overall results for rest of the classes |
 old:{0: 1.0, 1: 0.68, 2: 2.21, 3: 20.0, 4: 60.0}
 new:{0: 1.0, 1: 0.67, 2: 2.22, 3: 19.95, 4: 60.0}
