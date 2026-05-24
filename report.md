@@ -273,7 +273,7 @@ Because NSL-KDD is highly imbalanced, especially for U2R attacks, handling imbal
 - **Observation:** Drop in CV performance, however not so significant drop in test performance.
 
 ### Experiment 29: Voting ensemble of XGBoost, LightGBM, Random Forest 
-- **Algorithm:** XGBoost, LightGBM, Random Forest
+- **Algorithm:** XGBoost, LightGBM, Random Forest 
 - **What changed  from baseline:** Combine strongest models and test whether ensemble improves macro F1.
 - **Macro F1 (CV):** 0.9400 ± 0.0260
 - **Macro F1 (test):** 0.6168
