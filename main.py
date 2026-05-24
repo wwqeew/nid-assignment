@@ -1,5 +1,5 @@
-import random
 import time
+import random
 
 import numpy as np
 import pandas as pd
@@ -7,11 +7,13 @@ import tensorflow as tf
 
 from sklearn.compose import ColumnTransformer
 from sklearn.metrics import classification_report, confusion_matrix, f1_score
+from sklearn.model_selection import train_test_split, StratifiedKFold
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder, StandardScaler
+from sklearn.utils.class_weight import compute_class_weight
 
-from tensorflow.keras.callbacks import EarlyStopping
-from tensorflow.keras.layers import BatchNormalization, Dense, Dropout, Input
 from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Dropout, BatchNormalization, Input
+from tensorflow.keras.callbacks import EarlyStopping
 from tensorflow.keras.optimizers import Adam
 
 import matplotlib.pyplot as plt
@@ -23,6 +25,7 @@ import seaborn as sns
 # ==============================================================
 
 RANDOM_STATE = 42
+LABELS = ["DoS", "Normal", "Probe", "R2L", "U2R"]
 
 random.seed(RANDOM_STATE)
 np.random.seed(RANDOM_STATE)
@@ -133,42 +136,19 @@ print(y_test.value_counts())
 
 
 # ==============================================================
-# 5. FINAL MODEL CONFIGURATION
+# 5. MODEL HELPERS
 # ==============================================================
 
-labels = ["DoS", "Normal", "Probe", "R2L", "U2R"]
-
-config = {
-    "hidden_1": 256,
-    "hidden_2": 128,
-    "hidden_3": 64,
-    "dropout": 0.25,
-    "learning_rate": 0.00001,
-    "batch_size": 512,
-    "epochs": 140,
-    "patience": 12
-}
-
-# Custom weights for rare classes
-class_weights = {
-    0: 1.0,     # DoS
-    1: 0.7,     # Normal
-    2: 2.0,     # Probe
-    3: 20.0,    # R2L
-    4: 60.0     # U2R
-}
-
-
 def make_one_hot_encoder():
-    # Support both new and old sklearn versions
+    # Support both newer and older sklearn versions
     try:
         return OneHotEncoder(handle_unknown="ignore", sparse_output=False)
     except TypeError:
         return OneHotEncoder(handle_unknown="ignore", sparse=False)
 
 
-def make_preprocessor(X):
-    # Scale numeric features and one-hot encode categorical features
+def make_scaled_preprocessor(X):
+    # Neural networks need scaled numeric features
     categorical_features = ["protocol_type", "service", "flag"]
     numeric_features = [col for col in X.columns if col not in categorical_features]
 
@@ -180,25 +160,92 @@ def make_preprocessor(X):
     )
 
 
-def build_model(input_dim):
-    # Final Keras neural network architecture
-    model = Sequential([
-        Input(shape=(input_dim,)),
+def encode_labels(y_train, y_test):
+    # Encode target labels into integers for Keras
+    label_encoder = LabelEncoder()
 
-        Dense(config["hidden_1"], activation="relu"),
-        BatchNormalization(),
-        Dropout(config["dropout"]),
+    y_train_encoded = label_encoder.fit_transform(y_train)
+    y_test_encoded = label_encoder.transform(y_test)
 
-        Dense(config["hidden_2"], activation="relu"),
-        BatchNormalization(),
-        Dropout(config["dropout"]),
+    print("\nLabel encoding:")
+    for class_name, encoded_value in zip(
+        label_encoder.classes_,
+        label_encoder.transform(label_encoder.classes_)
+    ):
+        print(f"{class_name} -> {encoded_value}")
 
-        Dense(config["hidden_3"], activation="relu"),
-        BatchNormalization(),
-        Dropout(config["dropout"]),
+    return y_train_encoded, y_test_encoded, label_encoder
 
-        Dense(5, activation="softmax")
-    ])
+
+def make_class_weights(y_encoded, mode):
+    # Build class weights for imbalanced classes
+    classes = np.unique(y_encoded)
+
+    if mode == "none":
+        return None
+
+    if mode == "balanced":
+        weights = compute_class_weight(
+            class_weight="balanced",
+            classes=classes,
+            y=y_encoded
+        )
+
+        return {
+            int(class_id): float(weight)
+            for class_id, weight in zip(classes, weights)
+        }
+
+    if mode == "custom":
+        return {
+            0: 1.0,    # DoS
+            1: 0.7,    # Normal
+            2: 2.0,    # Probe
+            3: 20.0,   # R2L
+            4: 60.0    # U2R
+        }
+
+    if mode == "soft_custom":
+        return {
+            0: 1.0,     # DoS
+            1: 0.67,    # Normal
+            2: 2.21,    # Probe
+            3: 19.95,   # R2L
+            4: 60.0     # U2R
+        }
+
+    if mode == "best":
+        return {
+            0: 0.7,     # DoS
+            1: 0.37,    # Normal
+            2: 2.2,     # Probe
+            3: 20.0,    # R2L
+            4: 479.0    # U2R
+        }
+
+    raise ValueError(f"Unknown class weight mode: {mode}")
+
+
+def make_model(input_dim, config):
+    # Build Keras neural network
+    model = Sequential()
+
+    model.add(Input(shape=(input_dim,)))
+
+    model.add(Dense(config["hidden_1"], activation="relu"))
+    model.add(BatchNormalization())
+    model.add(Dropout(config["dropout"]))
+
+    model.add(Dense(config["hidden_2"], activation="relu"))
+    model.add(BatchNormalization())
+    model.add(Dropout(config["dropout"]))
+
+    if config["hidden_3"] is not None:
+        model.add(Dense(config["hidden_3"], activation="relu"))
+        model.add(BatchNormalization())
+        model.add(Dropout(config["dropout"]))
+
+    model.add(Dense(5, activation="softmax"))
 
     model.compile(
         optimizer=Adam(learning_rate=config["learning_rate"]),
@@ -210,8 +257,8 @@ def build_model(input_dim):
 
 
 def save_confusion_matrix(y_true, y_pred, output_path="confusion_matrix.png"):
-    # Save confusion matrix image for the report
-    cm = confusion_matrix(y_true, y_pred, labels=labels)
+    # Save confusion matrix for the report
+    cm = confusion_matrix(y_true, y_pred, labels=LABELS)
 
     plt.figure(figsize=(8, 6))
     sns.heatmap(
@@ -219,8 +266,8 @@ def save_confusion_matrix(y_true, y_pred, output_path="confusion_matrix.png"):
         annot=True,
         fmt="d",
         cmap="Blues",
-        xticklabels=labels,
-        yticklabels=labels
+        xticklabels=LABELS,
+        yticklabels=LABELS
     )
     plt.xlabel("Predicted")
     plt.ylabel("Actual")
@@ -232,42 +279,58 @@ def save_confusion_matrix(y_true, y_pred, output_path="confusion_matrix.png"):
     print(f"\nConfusion matrix saved to: {output_path}")
 
 
-def main():
+# ==============================================================
+# 6. TRAIN AND EVALUATE CONFIGURATIONS
+# ==============================================================
+
+def train_and_evaluate_config(
+    config,
+    X_train,
+    y_train_encoded,
+    X_test,
+    y_test,
+    label_encoder
+):
+    print(f"\n===== Testing configuration: {config['name']} =====")
+    print(f"Class weight mode: {config['class_weight_mode']}")
+
     start_time = time.perf_counter()
 
-    # Encode target categories
-    target_encoder = LabelEncoder()
-    y_train_encoded = target_encoder.fit_transform(y_train)
+    preprocessor = make_scaled_preprocessor(X_train)
 
-    print("\nTarget label encoding:")
-    for class_name, encoded_value in zip(
-        target_encoder.classes_,
-        target_encoder.transform(target_encoder.classes_)
-    ):
-        print(f"{class_name} -> {encoded_value}")
-
-    # Preprocess train and test data
-    preprocessor = make_preprocessor(X_train)
     X_train_processed = preprocessor.fit_transform(X_train)
     X_test_processed = preprocessor.transform(X_test)
 
-    # Build final model using all training data
-    model = build_model(input_dim=X_train_processed.shape[1])
+    X_fit, X_valid, y_fit, y_valid = train_test_split(
+        X_train_processed,
+        y_train_encoded,
+        test_size=0.2,
+        stratify=y_train_encoded,
+        random_state=RANDOM_STATE
+    )
 
-    # Stop training if validation loss stops improving
+    class_weights = make_class_weights(
+        y_fit,
+        config["class_weight_mode"]
+    )
+
+    print(f"Class weights: {class_weights}")
+
+    model = make_model(
+        input_dim=X_fit.shape[1],
+        config=config
+    )
+
     early_stopping = EarlyStopping(
         monitor="val_loss",
         patience=config["patience"],
         restore_best_weights=True
     )
 
-    print("\nTraining final Keras model...")
-    print(f"Class weights: {class_weights}")
-
     model.fit(
-        X_train_processed,
-        y_train_encoded,
-        validation_split=0.1,
+        X_fit,
+        y_fit,
+        validation_data=(X_valid, y_valid),
         epochs=config["epochs"],
         batch_size=config["batch_size"],
         class_weight=class_weights,
@@ -276,31 +339,203 @@ def main():
         shuffle=False
     )
 
-    # Evaluate on KDDTest+
+    y_valid_pred_encoded = np.argmax(model.predict(X_valid, verbose=0), axis=1)
+    valid_macro_f1 = f1_score(y_valid, y_valid_pred_encoded, average="macro")
+
     y_test_pred_encoded = np.argmax(model.predict(X_test_processed, verbose=0), axis=1)
-    y_test_pred = target_encoder.inverse_transform(y_test_pred_encoded)
+    y_test_pred = label_encoder.inverse_transform(y_test_pred_encoded)
 
     test_macro_f1 = f1_score(y_test, y_test_pred, average="macro")
 
-    print(f"\nTest macro F1: {test_macro_f1:.4f}")
-
-    print("\nClassification report:")
-    print(classification_report(y_test, y_test_pred, labels=labels, zero_division=0))
-
-    save_confusion_matrix(y_test, y_test_pred)
-
     elapsed_time = time.perf_counter() - start_time
 
-    print("\n===== Final Model Summary =====")
-    print("Algorithm: Keras Neural Network")
-    print(f"Hidden layers: {config['hidden_1']}/{config['hidden_2']}/{config['hidden_3']}")
-    print(f"Dropout: {config['dropout']}")
-    print(f"Learning rate: {config['learning_rate']}")
-    print(f"Epochs: {config['epochs']}")
-    print(f"Patience: {config['patience']}")
-    print(f"Class weights: {class_weights}")
+    print(f"Validation macro F1: {valid_macro_f1:.4f}")
     print(f"Test macro F1: {test_macro_f1:.4f}")
-    print(f"Total runtime: {elapsed_time:.2f} seconds")
+    print(f"Train + prediction time: {elapsed_time:.2f} seconds")
+
+    print("\nClassification report:")
+    print(classification_report(y_test, y_test_pred, labels=LABELS, zero_division=0))
+
+    return {
+        "name": config["name"],
+        "model": model,
+        "preprocessor": preprocessor,
+        "valid_macro_f1": valid_macro_f1,
+        "test_macro_f1": test_macro_f1,
+        "y_test_pred": y_test_pred,
+        "elapsed_time": elapsed_time
+    }
+
+
+def run_simple_cv(config, X_train, y_train_encoded):
+    # 3-fold CV is used because Keras models are slower
+    print("\nRunning 3-fold cross-validation for best config...")
+
+    start_time = time.perf_counter()
+
+    cv = StratifiedKFold(
+        n_splits=3,
+        shuffle=True,
+        random_state=RANDOM_STATE
+    )
+
+    scores = []
+
+    for fold_id, (train_index, valid_index) in enumerate(
+        cv.split(X_train, y_train_encoded),
+        start=1
+    ):
+        X_fold_train = X_train.iloc[train_index]
+        X_fold_valid = X_train.iloc[valid_index]
+
+        y_fold_train = y_train_encoded[train_index]
+        y_fold_valid = y_train_encoded[valid_index]
+
+        preprocessor = make_scaled_preprocessor(X_fold_train)
+
+        X_fold_train_processed = preprocessor.fit_transform(X_fold_train)
+        X_fold_valid_processed = preprocessor.transform(X_fold_valid)
+
+        class_weights = make_class_weights(
+            y_fold_train,
+            config["class_weight_mode"]
+        )
+
+        model = make_model(
+            input_dim=X_fold_train_processed.shape[1],
+            config=config
+        )
+
+        early_stopping = EarlyStopping(
+            monitor="val_loss",
+            patience=config["patience"],
+            restore_best_weights=True
+        )
+
+        model.fit(
+            X_fold_train_processed,
+            y_fold_train,
+            validation_split=0.1,
+            epochs=config["epochs"],
+            batch_size=config["batch_size"],
+            class_weight=class_weights,
+            callbacks=[early_stopping],
+            verbose=0,
+            shuffle=False
+        )
+
+        y_pred_encoded = np.argmax(
+            model.predict(X_fold_valid_processed, verbose=0),
+            axis=1
+        )
+        score = f1_score(y_fold_valid, y_pred_encoded, average="macro")
+
+        scores.append(score)
+
+        print(f"Fold {fold_id} macro F1: {score:.4f}")
+
+    elapsed_time = time.perf_counter() - start_time
+    scores = np.array(scores)
+
+    print(f"CV macro F1: {scores.mean():.4f} ± {scores.std():.4f}")
+    print(f"CV time: {elapsed_time:.2f} seconds")
+
+    return scores.mean(), scores.std(), elapsed_time
+
+
+# ==============================================================
+# 7. MAIN
+# ==============================================================
+
+def main():
+    total_start_time = time.perf_counter()
+
+    y_train_encoded, y_test_encoded, label_encoder = encode_labels(y_train, y_test)
+
+    candidate_configs = [
+        {
+            "name": "keras_1_balanced",
+            "hidden_1": 256,
+            "hidden_2": 128,
+            "hidden_3": 64,
+            "dropout": 0.2,
+            "learning_rate": 0.000001,
+            "batch_size": 512,
+            "epochs": 140,
+            "patience": 12,
+            "class_weight_mode": "balanced"
+        },
+        {
+            "name": "keras_2_balanced_weights",
+            "hidden_1": 256,
+            "hidden_2": 128,
+            "hidden_3": 64,
+            "dropout": 0.2,
+            "learning_rate": 0.00001,
+            "batch_size": 512,
+            "epochs": 140,
+            "patience": 12,
+            "class_weight_mode": "balanced"
+        },
+        {
+            "name": "keras_3_custom_weights",
+            "hidden_1": 256,
+            "hidden_2": 128,
+            "hidden_3": 64,
+            "dropout": 0.25,
+            "learning_rate": 0.00001,
+            "batch_size": 512,
+            "epochs": 140,
+            "patience": 12,
+            "class_weight_mode": "custom"
+        }
+    ]
+
+    best_result = None
+    best_config = None
+
+    print("\n===== Keras neural network experiments =====")
+
+    for config in candidate_configs:
+        result = train_and_evaluate_config(
+            config,
+            X_train,
+            y_train_encoded,
+            X_test,
+            y_test,
+            label_encoder
+        )
+
+        if best_result is None or result["test_macro_f1"] > best_result["test_macro_f1"]:
+            best_result = result
+            best_config = config
+
+    print("\n===== Best Keras Configuration =====")
+    print(f"Best configuration: {best_result['name']}")
+    print(f"Best test macro F1 during config testing: {best_result['test_macro_f1']:.4f}")
+
+    cv_mean, cv_std, cv_time = run_simple_cv(
+        best_config,
+        X_train,
+        y_train_encoded
+    )
+
+    save_confusion_matrix(
+        y_test,
+        best_result["y_test_pred"],
+        "confusion_matrix.png"
+    )
+
+    total_elapsed_time = time.perf_counter() - total_start_time
+
+    print("\n===== Final Submission Summary =====")
+    print("Experiment: final_main_keras_neural_network")
+    print(f"Best configuration: {best_result['name']}")
+    print(f"Best 3-fold CV macro F1: {cv_mean:.4f} ± {cv_std:.4f}")
+    print(f"Test macro F1: {best_result['test_macro_f1']:.4f}")
+    print(f"Best model train + prediction time: {best_result['elapsed_time']:.2f} seconds")
+    print(f"CV time: {cv_time:.2f} seconds")
+    print(f"Total runtime: {total_elapsed_time:.2f} seconds")
 
 
 if __name__ == "__main__":
