@@ -1,8 +1,5 @@
-import os
 import random
 import time
-
-os.environ["PYTHONHASHSEED"] = "42"
 
 import numpy as np
 import pandas as pd
@@ -10,7 +7,6 @@ import tensorflow as tf
 
 from sklearn.compose import ColumnTransformer
 from sklearn.metrics import classification_report, confusion_matrix, f1_score
-from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder, StandardScaler
 
 from tensorflow.keras.callbacks import EarlyStopping
@@ -31,11 +27,6 @@ RANDOM_STATE = 42
 random.seed(RANDOM_STATE)
 np.random.seed(RANDOM_STATE)
 tf.random.set_seed(RANDOM_STATE)
-
-try:
-    tf.config.experimental.enable_op_determinism()
-except Exception:
-    pass
 
 
 # ==============================================================
@@ -158,18 +149,18 @@ config = {
     "patience": 12
 }
 
-# custom weights for rare classes
+# Custom weights for rare classes
 class_weights = {
-    0: 1.0,    # DoS
-    1: 0.7,    # Normal
-    2: 2.0,    # Probe
-    3: 20.0,   # R2L
-    4: 60.0    # U2R
+    0: 1.0,     # DoS
+    1: 0.7,     # Normal
+    2: 2.0,     # Probe
+    3: 20.0,    # R2L
+    4: 60.0     # U2R
 }
 
 
 def make_one_hot_encoder():
-    # support both new and old sklearn versions
+    # Support both new and old sklearn versions
     try:
         return OneHotEncoder(handle_unknown="ignore", sparse_output=False)
     except TypeError:
@@ -177,7 +168,7 @@ def make_one_hot_encoder():
 
 
 def make_preprocessor(X):
-    # scale numeric features and one-hot encode categorical features
+    # Scale numeric features and one-hot encode categorical features
     categorical_features = ["protocol_type", "service", "flag"]
     numeric_features = [col for col in X.columns if col not in categorical_features]
 
@@ -190,7 +181,7 @@ def make_preprocessor(X):
 
 
 def build_model(input_dim):
-    # final Keras neural network architecture
+    # Final Keras neural network architecture
     model = Sequential([
         Input(shape=(input_dim,)),
 
@@ -219,7 +210,7 @@ def build_model(input_dim):
 
 
 def save_confusion_matrix(y_true, y_pred, output_path="confusion_matrix.png"):
-    # save confusion matrix image for the report
+    # Save confusion matrix image for the report
     cm = confusion_matrix(y_true, y_pred, labels=labels)
 
     plt.figure(figsize=(8, 6))
@@ -244,7 +235,7 @@ def save_confusion_matrix(y_true, y_pred, output_path="confusion_matrix.png"):
 def main():
     start_time = time.perf_counter()
 
-    # encode target categories
+    # Encode target categories
     target_encoder = LabelEncoder()
     y_train_encoded = target_encoder.fit_transform(y_train)
 
@@ -255,23 +246,15 @@ def main():
     ):
         print(f"{class_name} -> {encoded_value}")
 
-    # preprocess train and test data
+    # Preprocess train and test data
     preprocessor = make_preprocessor(X_train)
     X_train_processed = preprocessor.fit_transform(X_train)
     X_test_processed = preprocessor.transform(X_test)
 
-    # create validation split
-    X_fit, X_valid, y_fit, y_valid = train_test_split(
-        X_train_processed,
-        y_train_encoded,
-        test_size=0.2,
-        stratify=y_train_encoded,
-        random_state=RANDOM_STATE
-    )
+    # Build final model using all training data
+    model = build_model(input_dim=X_train_processed.shape[1])
 
-    model = build_model(input_dim=X_fit.shape[1])
-
-    # stop training if validation loss stops improving
+    # Stop training if validation loss stops improving
     early_stopping = EarlyStopping(
         monitor="val_loss",
         patience=config["patience"],
@@ -282,9 +265,9 @@ def main():
     print(f"Class weights: {class_weights}")
 
     model.fit(
-        X_fit,
-        y_fit,
-        validation_data=(X_valid, y_valid),
+        X_train_processed,
+        y_train_encoded,
+        validation_split=0.1,
         epochs=config["epochs"],
         batch_size=config["batch_size"],
         class_weight=class_weights,
@@ -293,18 +276,13 @@ def main():
         shuffle=False
     )
 
-    # evaluate on validation set
-    y_valid_pred_encoded = np.argmax(model.predict(X_valid, verbose=0), axis=1)
-    valid_macro_f1 = f1_score(y_valid, y_valid_pred_encoded, average="macro")
-
-    # evaluate on KDDTest+
+    # Evaluate on KDDTest+
     y_test_pred_encoded = np.argmax(model.predict(X_test_processed, verbose=0), axis=1)
     y_test_pred = target_encoder.inverse_transform(y_test_pred_encoded)
 
     test_macro_f1 = f1_score(y_test, y_test_pred, average="macro")
 
-    print(f"\nValidation macro F1: {valid_macro_f1:.4f}")
-    print(f"Test macro F1: {test_macro_f1:.4f}")
+    print(f"\nTest macro F1: {test_macro_f1:.4f}")
 
     print("\nClassification report:")
     print(classification_report(y_test, y_test_pred, labels=labels, zero_division=0))
@@ -320,6 +298,7 @@ def main():
     print(f"Learning rate: {config['learning_rate']}")
     print(f"Epochs: {config['epochs']}")
     print(f"Patience: {config['patience']}")
+    print(f"Class weights: {class_weights}")
     print(f"Test macro F1: {test_macro_f1:.4f}")
     print(f"Total runtime: {elapsed_time:.2f} seconds")
 
