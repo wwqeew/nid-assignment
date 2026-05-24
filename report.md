@@ -407,13 +407,13 @@ Because NSL-KDD is highly imbalanced, especially for U2R attacks, handling imbal
 
 ### 3.4 Confusion Matrix
 
-[Generate this image using the code from Section 9 of the guidebook. For Markdown report save it as `confusion_matrix.png` in the same folder as this report and add link `![Confusion Matrix](confusion_matrix.png)`. Don’t forget the exclamation mark].
+![Confusion Matrix](confusion_matrix.png)
 
 ## 4. Cross-Validation vs. Test Score
 
-- **CV macro F1:** 0.7058 ± 0.0140
-- **Test macro F1:** 0.6944
-- **Gap:** 0.0114
+- **CV macro F1:** 0.7536 ± 0.0164
+- **Test macro F1:** 0.7139
+- **Gap:** 0.0397
 
 **Analysis:** [Explain the gap. Is it expected? Is it due to unseen attack types in KDDTest+? Does it indicate overfitting?]
 
@@ -427,11 +427,11 @@ Because NSL-KDD is highly imbalanced, especially for U2R attacks, handling imbal
 
 ### What surprisingly didn't help?
 
-[e.g., "Feature selection with SelectKBest removed 15 features but macro F1 dropped — the removed features contained information useful for rare classes"]
+Changing sizes 258/128/64 had similar results as 128/64/32.
 
 ### What would you try with more time?
 
-[e.g., "Stacking ensemble, more aggressive hyperparameter tuning, deeper feature engineering"]
+With more time we would invest more time and research on neural network since it gave best scores, however scores for U2R and R2L were better in other experiments, which implies that this model have bigger potential in achieving ~0.8 F1 (test) scores. 
 
 ---
 
