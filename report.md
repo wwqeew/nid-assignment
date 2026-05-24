@@ -245,11 +245,88 @@ Because NSL-KDD is highly imbalanced, especially for U2R attacks, handling imbal
 - **Observation:** Despite strong CV performance, this ensemble underpredicted R2L and U2R on KDDTest+, so it was worse than the best single Keras model.
 
 ### Experiment 25: SMOTEEN + Tuned XGBoost
-- **Algorithm:**
-- **What changed  from baseline:**
-- **Macro F1 (CV):** 
-- **Macro F1 (test):** 
-- **Observation:** 
+- **Algorithm:** Tuned XGBoost
+- **What changed  from baseline:** Combined oversampling and cleaning to improve R2L vs Normal separation.
+- **Macro F1 (CV):** 0.9412 ± 0.0295
+- **Macro F1 (test):** 0.6058 
+- **Observation:** Despite strong CV performance, this ensemble underpredicted R2L and U2R on KDDTest+.
+
+### Experiment 26: XGBoost + sample weight
+- **Algorithm:** 
+- **What changed  from baseline:** Cost-sensitive XGBoost with `sample_weight`. Penalize mistakes on R2L and U2R more strongly without relying only on SMOTE.
+- **Macro F1 (CV):** 0.9506 ± 0.0204
+- **Macro F1 (test):** 0.5968
+- **Observation:** Despite strong CV performance, this ensemble underpredicted R2L and U2R on KDDTest+.
+
+### Experiment 27: Threshold / probability tuning for LightGBM
+- **Algorithm:** Threshold / probability tuning for LightGBM
+- **What changed  from baseline:** Added threshold / probability tuning
+- **Macro F1 (CV):** 0.9329 ± 0.0252
+- **Macro F1 (test):** 0.6080
+- **Observation:** 0.48 score for U2R with multiplier 4.0 
+
+### Experiment 28: SMOTE + MLP neural network
+- **Algorithm:** SMOTE + MLP neural network
+- **What changed  from baseline:** Test an actual neural network model for comparison.
+- **Macro F1 (CV):** 0.8614 ± 0.0217
+- **Macro F1 (test):** 0.5919
+- **Observation:** Drop in CV performance, however not so significant drop in test performance.
+
+### Experiment 29: Voting ensemble of XGBoost, LightGBM, Random Forest 
+- **Algorithm:** XGBoost, LightGBM, Random Forest
+- **What changed  from baseline:** Combine strongest models and test whether ensemble improves macro F1.
+- **Macro F1 (CV):** 0.9400 ± 0.0260
+- **Macro F1 (test):** 0.6168
+- **Observation:** Raw voting had 0.5957 best score still was tuned voting.
+
+### Experiment 30: Feature selection + Tuned SMOTE XGBoost
+- **Algorithm:** Feature selection + Tuned SMOTE XGBoost
+- **What changed  from baseline:** Remove noisy/redundant features and test whether generalization improves.
+- **Macro F1 (CV):** 0.9412 ± 0.0295
+- **Macro F1 (test):** 0.6058 
+- **Observation:** No obvious nor significant improvements.
+
+### Experiment 31: Linear SVM with scaling and class weights
+- **Algorithm:** Linear SVM + scaling + class weights
+- **What changed  from baseline:** Test SVM as an alternative classifier for minority classes. 
+- **Macro F1 (CV):** 0.8250 ± 0.0340
+- **Macro F1 (test):** 0.5549
+- **Observation:** U2R was decent 0.37, but R2L was 0.06
+
+### Experiment 32: k-NN with scaling and SMOTE
+- **Algorithm:** k-NN with scaling and SMOTE
+- **What changed  from baseline:** Test distance-based classification as an additional comparison
+- **Macro F1 (CV):** 0.7641 ± 0.0076
+- **Macro F1 (test):** 0.6358 
+- **Observation:** Signinficant CV loss, however signigficant test result
+
+### Experiment 33: Keras class weight + seed tuning
+- **Algorithm:** Keras class weight + seed tuning
+- **What changed  from baseline:** Reducing step size and decreasing dropout.
+- **Macro F1 (CV):** 0.7623 ± 0.0219
+- **Macro F1 (test):** 0.6849
+- **Observation:** Increases Recall score for R2L. Also while F1 final stays same, small differences are observed in CV Macro F1 scores while run on diff Computers, something makes slight randomization, another aspect these values brought matching of precision and recall for U2R.
+
+### Experiment 34: Keras class weight + seed tuning
+- **Algorithm:** Keras class weight + seed tuning
+- **What changed  from baseline:** Reducing weight for normal traffic.
+- **Macro F1 (CV):** 0.7620 ± 0.0217
+- **Macro F1 (test):** 0.6907 
+- **Observation:** Decreasing value of normal traffic increases overall results for rest of the classes. Decrease is not proportional. Afterwards multiple small changes was made, highest score still stayed within initial test values. Also for U2R score of precission 0.51 and recall 0.51 was achieved, which is very balanced and good result.
+
+### Experiment 35: Keras + NN w. balanced weights 
+- **Algorithm:** Keras + NN w. balanced weights 
+- **What changed  from baseline:** Test balanced weights along with some custom weights.
+- **Macro F1 (CV):** Missing
+- **Macro F1 (test):** 0.6912 
+- **Observation:** Weights calculated by script. Very unstable (volatile) results each time gives different results, this was highest output from multiple same value runs. Some values in code cause randomization.
+
+### Experiment 36: Keras + NN
+- **Algorithm:** Keras + NN
+- **What changed  from baseline:** Changed code behavior to reduce randomization, kept balanced weights removed custom weights.
+- **Macro F1 (CV):** 0.7058 ± 0.0140
+- **Macro F1 (test):** 0.6944 
+- **Observation:** keras_2_balanced_weights, highest score again, however difficulty to replicate results.
 
 ### Experiments Summary
 
@@ -279,6 +356,18 @@ Because NSL-KDD is highly imbalanced, especially for U2R attacks, handling imbal
 | 22 | Keras categorical embeddings MLP | Keras NN with embeddings | Custom class weights | 0.8321 ± 0.0506 | 0.6578 |
 | 23 | Stacking Keras + XGBoost | Stacking Ensemble | Mixed model-level handling | 0.9259 ± 0.0317 | 0.5491 |
 | 24 | Voting Keras + XGBoost | Soft Voting Ensemble | Mixed model-level handling | 0.9430 ± 0.0320 | 0.5976 |
+| 25 | SMOTEENN + Tuned XGBoost | 0.9412 ± 0.0295 | 0.6058 | combined oversampling and cleaning to improve R2L vs Normal separation |
+| 26 | Cost-sensitive XGBoost with `sample_weight` | 0.9506 ± 0.0204 | 0.5968 | Penalize mistakes on R2L and U2R more strongly without relying only on SMOTE |
+| 27 | Threshold / probability tuning for LightGBM | 0.9329 ± 0.0252 | 0.6080 | 0.48 score for U2R with multiplier 4.0 |
+| 28 | SMOTE + MLP neural network | 0.8614 ± 0.0217 | 0.5919 | Test an actual neural network model for comparison, 
+| 29 | Voting ensemble of XGBoost, LightGBM, Random Forest | 0.9400 ± 0.0260 | 0.6168 | Raw voting had 0.5957 best score still was tuned voting, Combine strongest models and test whether ensemble improves macro F1 |
+| 30 | Feature selection + Tuned SMOTE XGBoost | 0.9412 ± 0.0295 | 0.6058 | Remove noisy/redundant features and test whether generalization improves |
+| 31 | Linear SVM with scaling and class weights | 0.8250 ± 0.0340 | 0.5549 | Test SVM as an alternative classifier for minority classes U2R was decent 0.37, but R2L was 0.06 |
+| 32 | k-NN with scaling and SMOTE | 0.7641 ± 0.0076 | 0.6358 | Test distance-based classification as an additional comparison |
+| 33 | Keras class weight + seed tuning | 0.7623 ± 0.0219 | 0.6849 | Reducing step size and decreasing dropout, increases Recall score for R2L. Also while F1 final stays same, small differences are observed in CV Macro F1 scores while run on diff Computers, something makes slight randomization, another aspect these values brought matching of precision and recall for U2R |
+| 34 | Keras class weight + seed tuning | 0.7620 ± 0.0217 | 0.6907 | Decreasing value of normal traffic increases overall results for rest of the classes |
+| 35 | Keras + NN w. balanced weights | NA | 0.6912 | Weights calculated by script very unstable (volatile) results each time gives different results, this was highest |
+| 36 | 16_keras_neural_network | 0.7058 ± 0.0140 | 0.6944 |keras_2_balanced_weights, highest score again but not stable results |
 
 ---
 
@@ -286,27 +375,27 @@ Because NSL-KDD is highly imbalanced, especially for U2R attacks, handling imbal
 
 ### 3.1 Best Model
 
-- **Algorithm:** [e.g., XGBoost]
-- **Key parameters:** [e.g., n_estimators=200, max_depth=6, learning_rate=0.1, scale_pos_weight=...]
-- **Imbalance handling:** [e.g., SMOTE + class_weight]
-- **Feature engineering:** [e.g., added src_bytes/dst_bytes ratio]
+- **Algorithm:** Keras + NN w. balanced weights
+- **Key parameters:** Dropout: 0.18, Learning Rate: 0.00001, Epochs: 120, Patience: 10, 
+- **Imbalance handling:** Weights: calculated by script, depends on representation ratio.
+- **Feature engineering:** Changed fix() from shuffle=True (Default) to False. Gave stable reulsts but also random record scores.
 
 ### 3.2 Final Macro F1-Score
 
 | Metric | Score |
 | --- | --- |
-| **Macro F1 (test)** |  |
-| Macro F1 (CV) |  |
+| **Macro F1 (test)** | 0.6944 |
+| Macro F1 (CV) | 0.7058 ± 0.0140 |
 
 ### 3.3 Classification Report
 
 | Category | Precision | Recall | F1-Score | Support |
 | --- | --- | --- | --- | --- |
-| Normal |  |  |  |  |
-| DoS |  |  |  |  |
-| Probe |  |  |  |  |
-| R2L |  |  |  |  |
-| U2R |  |  |  |  |
+| Normal | 0.78 | 0.91 | 0.84 | 9711 |
+| DoS | 0.91 | 0.85 | 0.88 | 7460 |
+| Probe | 0.75 | 0.83 | 0.79 | 2421 |
+| R2L | 0.91 | 0.45 | 0.61 | 2885 |
+| U2R | 0.28 | 0.52 | 0.36 | 67 |
 
 ### 3.4 Confusion Matrix
 
