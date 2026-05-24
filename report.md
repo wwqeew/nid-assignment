@@ -328,6 +328,13 @@ Because NSL-KDD is highly imbalanced, especially for U2R attacks, handling imbal
 - **Macro F1 (test):** 0.6944 
 - **Observation:** keras_2_balanced_weights, highest score again, however difficulty to replicate results.
 
+### Experiment 37: Keras + NN
+- **Algorithm:** Keras + NN
+- **What changed  from baseline:** Used custom + balanced weights.
+- **Macro F1 (CV):** 0.7536 ± 0.0164
+- **Macro F1 (test):** 0.7139 
+- **Observation:** Used weights from previous Keras tests which gave stable result of ~0.68.
+
 ### Experiments Summary
 
 | # | Description | Algorithm | Imbalance Handling | Macro F1 (CV) | Macro F1 (test) |
@@ -368,6 +375,7 @@ Because NSL-KDD is highly imbalanced, especially for U2R attacks, handling imbal
 | 34 | Keras class weight + seed tuning | 0.7620 ± 0.0217 | 0.6907 | Decreasing value of normal traffic increases overall results for rest of the classes |
 | 35 | Keras + NN w. balanced weights | NA | 0.6912 | Weights calculated by script very unstable (volatile) results each time gives different results, this was highest |
 | 36 | 16_keras_neural_network | 0.7058 ± 0.0140 | 0.6944 |keras_2_balanced_weights, highest score again but not stable results |
+| 37 | 16_keras_neural_network | 0.7536 ± 0.0164 | 0.7139 | Used custom values from Keras which gave best result of ~0.68
 
 ---
 
@@ -376,26 +384,26 @@ Because NSL-KDD is highly imbalanced, especially for U2R attacks, handling imbal
 ### 3.1 Best Model
 
 - **Algorithm:** Keras + NN w. balanced weights
-- **Key parameters:** Dropout: 0.18, Learning Rate: 0.00001, Epochs: 120, Patience: 10, 
-- **Imbalance handling:** Weights: calculated by script, depends on representation ratio.
-- **Feature engineering:** Changed fix() from shuffle=True (Default) to False. Gave stable reulsts but also random record scores.
+- **Key parameters:** Dropout: 0.25, Learning Rate: 0.00001, Epochs: 140, Patience: 12, 
+- **Imbalance handling:** {0: 1.0, 1: 0.7, 2: 2.0, 3: 20.0, 4: 60.0}
+- **Feature engineering:** Changed fix() from shuffle=True (Default) to False. Gave stable reulsts but also random record scores. Used best score Keras weights as custom weights for this model.
 
 ### 3.2 Final Macro F1-Score
 
 | Metric | Score |
 | --- | --- |
-| **Macro F1 (test)** | 0.6944 |
-| Macro F1 (CV) | 0.7058 ± 0.0140 |
+| **Macro F1 (test)** | 0.7139 |
+| Macro F1 (CV) | 0.7536 ± 0.0164 |
 
 ### 3.3 Classification Report
 
 | Category | Precision | Recall | F1-Score | Support |
 | --- | --- | --- | --- | --- |
-| Normal | 0.78 | 0.91 | 0.84 | 9711 |
-| DoS | 0.91 | 0.85 | 0.88 | 7460 |
-| Probe | 0.75 | 0.83 | 0.79 | 2421 |
-| R2L | 0.91 | 0.45 | 0.61 | 2885 |
-| U2R | 0.28 | 0.52 | 0.36 | 67 |
+| Normal | 0.74 | 0.96 | 0.83 | 9711 |
+| DoS | 0.96 | 0.88 | 0.92 | 7460 |
+| Probe | 0.85 | 0.78 | 0.81 | 2421 |
+| R2L | 0.97 | 0.28 | 0.43 | 2885 |
+| U2R | 0.60 | 0.55 | 0.57 | 67 |
 
 ### 3.4 Confusion Matrix
 
