@@ -8,7 +8,7 @@
 
 **Date:** 22.05.2026
 
-Repository link: [[GitHub](https://github.com/wwqeew/nid-assignment)]
+Repository link: [GitHub](https://github.com/wwqeew/nid-assignment)
 
 ---
 
@@ -21,8 +21,6 @@ Our overall strategy was focused on improving detection of minority attack class
 We also experimented with feature engineering, feature selection, stacking ensembles, voting ensembles, threshold tuning, and categorical embeddings.
 
 ### 1.2 Preprocessing
-
-Describe any changes you made to the data beyond the starter code:
 
 - **Feature engineering:** Several additional features were created during experiments. Traffic ratio and interaction-based features such as byte ratios, combinations of connection statistics that could better separate minority attack classes from normal traffic. Feature engineering mainly targeted improving R2L and U2R detection.
 - **Feature selection:** Feature selection was tested in later experiments. Low-importance and redundant features were removed based on XGBoost feature importance scores. Encoded feature set was reduced from 121 features to approximately 61 features in some experiments. This slightly improved generalization and reduced noise.
