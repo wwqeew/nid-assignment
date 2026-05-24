@@ -415,7 +415,9 @@ Because NSL-KDD is highly imbalanced, especially for U2R attacks, handling imbal
 - **Test macro F1:** 0.7139
 - **Gap:** 0.0397
 
-**Analysis:** [Explain the gap. Is it expected? Is it due to unseen attack types in KDDTest+? Does it indicate overfitting?]
+**Analysis:** Test macro F1-score is lower than cross-validation score by 0.0397, which is expected gap. Cross-validation was performed on KDDTrain+, while KDDTest+ contains different distribution and includes attack types that were not present during training. Model had to generalize to unseen attack patterns instead of only recognizing known examples.
+
+Gap does not indicate overfitting, because difference between CV and test performance is not very large. Model still generalized reasonably well on test set and achieved strong performance on Normal, DoS, and Probe classes. Main weakness was R2L detection: many R2L samples were still classified as Normal, which reduced macro F1-score. U2R performance was much better than in the early experiments, but this class remained unstable because it has only 67 samples in the test set.
 
 ---
 
@@ -423,15 +425,29 @@ Because NSL-KDD is highly imbalanced, especially for U2R attacks, handling imbal
 
 ### What had the biggest positive impact?
 
-[e.g., "SMOTE increased R2L recall from 0.00 to 0.12, which raised macro F1 by 0.08"]
+ * Biggest positive impact came from moving from tree-based models to Keras neural networks with carefully tuned class weights. Earlier models such as XGBoost, LightGBM, SMOTEENN, and voting ensembles improved over Random Forest baseline, but most of them stayed around 0.60–0.62 test macro F1. Neural network experiments showed higher potential, especially after tuning class weights for R2L and U2R.
+
+ * Custom and balanced class weights helped model pay more attention to rare attack categories. R2L and U2R were the main reason why earlier models had low macro F1. 
+
+ * Another useful change was reducing instability in neural network training process. Disabling shuffling in some parts of the training process and reusing best Keras weight configuration helped produce more stable and reproducible results than earlier neural network runs.
 
 ### What surprisingly didn't help?
 
-Changing sizes 258/128/64 had similar results as 128/64/32.
+ * Increasing neural network layer sizes did not bring clear improvement. For example, using larger hidden layers such as 256/128/64 gave similar results to smaller architectures such as 128/64/32. 
+
+ * SMOTE helped tree-based models, especially XGBoost, but it did not work equally well for neural networks. In the MLP experiments, SMOTE actually reduced test macro F1-score because minority-class precision dropped. Threshold tuning also did not consistently help: for XGBoost, the best probability multipliers stayed at 1.0, and for Keras it made the model less stable.
+
+ * SMOTEENN slightly improved XGBoost, but improvement was very small compared to much higher training time. It reached 0.6097 test macro F1, while experiment took around 55 minutes in total (on colab/kaggle).
+
+ * Ensemble methods were disappointing. Soft voting and stacking produced strong cross-validation scores, but they did not generalize well to KDDTest+. Stacking ensemble dropped to 0.5491 test macro F1, and Keras + XGBoost voting ensemble dropped to 0.5976 because both underpredicted R2L and U2R.
 
 ### What would you try with more time?
 
-With more time we would invest more time and research on neural network since it gave best scores, however scores for U2R and R2L were better in other experiments, which implies that this model have bigger potential in achieving ~0.8 F1 (test) scores. 
+ * With more time, we would focus more on neural networks, because they produced the best final results and showed highest potential.
+
+ * We would also continue experimenting with categorical embeddings, because embedding-based Keras model achieved one of the strongest test results and improved R2L detection. Better embedding architecture or a hybrid model combining embeddings with carefully tuned numerical features could improve performance further.
+
+ * Another direction could be more careful per-class tuning for R2L and U2R. Test separate validation strategies/probability calibration/two-stage model that first separates normal traffic from suspicious traffic and then classifies attack types.
 
 ---
 
