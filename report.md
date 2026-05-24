@@ -244,6 +244,12 @@ Because NSL-KDD is highly imbalanced, especially for U2R attacks, handling imbal
 - **Macro F1 (test):** 0.5976
 - **Observation:** Despite strong CV performance, this ensemble underpredicted R2L and U2R on KDDTest+, so it was worse than the best single Keras model.
 
+### Experiment 25: SMOTEEN + Tuned XGBoost
+- **Algorithm:**
+- **What changed  from baseline:**
+- **Macro F1 (CV):** 
+- **Macro F1 (test):** 
+- **Observation:** 
 
 ### Experiments Summary
 
