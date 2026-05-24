@@ -66,19 +66,12 @@ print(f"Test set:     {df_test.shape[0]} records, {df_test.shape[1]} columns")
 
 
 # ==============================================================
-# 2. ENCODE CATEGORICAL FEATURES
+# 2. KEEP CATEGORICAL FEATURES AS STRINGS
 # ==============================================================
 
-# Merge train and test for consistent encoding
+# categorical features are not label-encoded here
+# they are handled later by OneHotEncoder inside the Keras preprocessor
 df_full = pd.concat([df_train, df_test])
-
-cat_cols = ['protocol_type', 'service', 'flag']
-label_encoders = {}
-
-for col in cat_cols:
-    le = LabelEncoder()
-    df_full[col] = le.fit_transform(df_full[col])
-    label_encoders[col] = le
 
 
 # ==============================================================
