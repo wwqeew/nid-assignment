@@ -365,7 +365,7 @@ Because NSL-KDD is highly imbalanced, especially for U2R attacks, handling imbal
 
 **Part 2:**  
 | Experiment | Model | CV Macro F1 | Test Macro F1 | Observation |
-| --- | --- | ---: | ---: | --- |
+| --- | --- | --- | --- | --- |
 | 25 | SMOTEENN + Tuned XGBoost | 0.9412 ± 0.0295 | 0.6058 | combined oversampling and cleaning to improve R2L vs Normal separation |
 | 26 | Cost-sensitive XGBoost with `sample_weight` | 0.9506 ± 0.0204 | 0.5968 | Penalize mistakes on R2L and U2R more strongly without relying only on SMOTE |
 | 27 | Threshold / probability tuning for LightGBM | 0.9329 ± 0.0252 | 0.6080 | 0.48 score for U2R with multiplier 4.0 |
