@@ -415,7 +415,7 @@ Because NSL-KDD is highly imbalanced, especially for U2R attacks, handling imbal
 ## 4. Cross-Validation vs. Test Score
 
 - **CV macro F1:** 0.7536 ± 0.0164
-- **Test macro F1:** 0.7139 in the best recorded run (repeated runs on kaggle/colab produced lower scores around ~0.67)
+- **Test macro F1:** 0.7139 in the best recorded run (repeated runs on kaggle/colab produced lower scores around ~0.68)
 - **Gap:** 0.0397
 
 **Analysis:** Test macro F1-score is lower than cross-validation score by 0.0397, which is expected gap. Cross-validation was performed on KDDTrain+, while KDDTest+ contains different distribution and includes attack types that were not present during training. Model had to generalize to unseen attack patterns instead of only recognizing known examples.
