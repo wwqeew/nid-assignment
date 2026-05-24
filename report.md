@@ -403,9 +403,9 @@ Because NSL-KDD is highly imbalanced, especially for U2R attacks, handling imbal
 
 ## 4. Cross-Validation vs. Test Score
 
-- **CV macro F1:** [score ± std]
-- **Test macro F1:** [score]
-- **Gap:** [CV − test]
+- **CV macro F1:** 0.7058 ± 0.0140
+- **Test macro F1:** 0.6944
+- **Gap:** 0.0114
 
 **Analysis:** [Explain the gap. Is it expected? Is it due to unseen attack types in KDDTest+? Does it indicate overfitting?]
 
@@ -429,7 +429,75 @@ Because NSL-KDD is highly imbalanced, especially for U2R attacks, handling imbal
 
 ## Appendix: Environment
 
-- **Hardware:** [CPU, RAM, GPU if used]
-- **Python version:** [e.g., 3.11]
-- **Key libraries:** [scikit-learn version, xgboost version, etc.]
-- **Random seed:** [e.g., 42]
+- **Hardware:** Intel i5-10600K, 64GB, 2xRTX2080Ti 
+- **Python version:** 3.12.3
+- **Key libraries:** {
+absl-py==2.4.0
+astunparse==1.6.3
+certifi==2026.5.20
+charset-normalizer==3.4.7
+contourpy==1.3.3
+cycler==0.12.1
+flatbuffers==25.12.19
+fonttools==4.63.0
+gast==0.7.0
+google-pasta==0.2.0
+grpcio==1.80.0
+h5py==3.14.0
+idna==3.16
+imbalanced-learn==0.14.1
+joblib==1.5.3
+keras==3.14.1
+kiwisolver==1.5.0
+libclang==18.1.1
+lightgbm==4.6.0
+Markdown==3.10.2
+markdown-it-py==4.2.0
+MarkupSafe==3.0.3
+matplotlib==3.10.9
+mdurl==0.1.2
+ml_dtypes==0.5.4
+namex==0.1.0
+numpy==2.4.6
+nvidia-cublas-cu12==12.9.2.10
+nvidia-cuda-cupti-cu12==12.9.79
+nvidia-cuda-nvcc-cu12==12.9.86
+nvidia-cuda-nvrtc-cu12==12.9.86
+nvidia-cuda-runtime-cu12==12.9.79
+nvidia-cudnn-cu12==9.22.0.52
+nvidia-cufft-cu12==11.4.1.4
+nvidia-curand-cu12==10.3.10.19
+nvidia-cusolver-cu12==11.7.5.82
+nvidia-cusparse-cu12==12.5.10.65
+nvidia-nccl-cu12==2.30.4
+nvidia-nvjitlink-cu12==12.9.86
+opt_einsum==3.4.0
+optree==0.19.1
+packaging==26.2
+pandas==3.0.3
+pillow==12.2.0
+protobuf==7.35.0
+Pygments==2.20.0
+pyparsing==3.3.2
+python-dateutil==2.9.0.post0
+requests==2.34.2
+rich==15.0.0
+scikit-learn==1.8.0
+scipy==1.17.1
+seaborn==0.13.2
+setuptools==82.0.1
+six==1.17.0
+sklearn-compat==0.1.5
+tensorboard==2.20.0
+tensorboard-data-server==0.7.2
+tensorflow==2.20.0
+termcolor==3.3.0
+threadpoolctl==3.6.0
+typing_extensions==4.15.0
+urllib3==2.7.0
+Werkzeug==3.1.8
+wheel==0.47.0
+wrapt==2.2.0
+xgboost==3.2.0
+}
+- **Random seed:** 100 (highest results in overall)
