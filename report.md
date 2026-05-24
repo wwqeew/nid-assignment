@@ -364,7 +364,7 @@ Because NSL-KDD is highly imbalanced, especially for U2R attacks, handling imbal
 | 24 | Voting Keras + XGBoost | Soft Voting Ensemble | Mixed model-level handling | 0.9430 ± 0.0320 | 0.5976 |
 
 **Part 2:**  
-| Experiment | Model | CV Macro F1 | Test Macro F1 | Observation |
+| # | Description | Macro F1 (CV) | Macro F1 (test) | Observation |
 | --- | --- | --- | --- | --- |
 | 25 | SMOTEENN + Tuned XGBoost | 0.9412 ± 0.0295 | 0.6058 | combined oversampling and cleaning to improve R2L vs Normal separation |
 | 26 | Cost-sensitive XGBoost with `sample_weight` | 0.9506 ± 0.0204 | 0.5968 | Penalize mistakes on R2L and U2R more strongly without relying only on SMOTE |
